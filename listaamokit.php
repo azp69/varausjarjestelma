@@ -1,5 +1,5 @@
 <?php
-    include_once("Tietokanta.php");
+    include_once("modules/tietokanta.php");
     
     $tk = new Tietokanta;
 

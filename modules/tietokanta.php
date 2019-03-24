@@ -2,6 +2,7 @@
 
     class Tietokanta
     {
+        
         public function __construct()
         {
             require_once("db_connection.php");
@@ -18,6 +19,7 @@
 
         public function ListaaMokit()
         {
+            echo $db_username;
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
 
             if ($connection->connect_error)
@@ -40,8 +42,7 @@
             {
                 echo "Ei yhtään tulosta.";
             }
-            $connection->close();
+            $conn->close();
         }
     }
-
 ?>
