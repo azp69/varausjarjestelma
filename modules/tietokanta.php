@@ -17,9 +17,37 @@
 
         }
 
+        public function LisaaMokki($nimi, $kuvaus, $sijainti, $hinta)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $ni = mysqli_real_escape_string($connection, $nimi);
+            $ku = mysqli_real_escape_string($connection, $kuvaus);
+            $si = mysqli_real_escape_string($connection, $sijainti);
+            $hi = mysqli_real_escape_string($connection, $hinta);
+
+            $query = "INSERT INTO mokit (nimi, kuvaus, sijainti, hinta) VALUES ('$ni' ,'$ku', '$si', '$hi')";
+
+            if($connection->query($query) === TRUE)
+            {
+                echo "OK.";
+            }
+            else
+            {
+                echo "Pieleen meni.";
+            }
+
+            $connection->close();
+        
+        }
+
         public function ListaaMokit()
         {
-            echo $db_username;
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
 
             if ($connection->connect_error)
@@ -42,7 +70,7 @@
             {
                 echo "Ei yhtään tulosta.";
             }
-            $conn->close();
+            $connection->close();
         }
     }
 ?>
