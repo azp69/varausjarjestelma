@@ -1,2 +1,2 @@
-# varausjarjestelma
+# Vuokramökkien varausjärjestelmä
 Kouluprojekti
