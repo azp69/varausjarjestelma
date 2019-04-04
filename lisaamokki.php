@@ -1,7 +1,7 @@
 <?php
 
     include_once("modules/tietokanta.php");
-    
+        
     $tk = new Tietokanta;
 
     if ($_POST['nimi'] && $_POST['kuvaus'] && $_POST['sijainti'] && $_POST['hinta'])
