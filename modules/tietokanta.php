@@ -5,7 +5,7 @@
         
         public function __construct()
         {
-            require_once("db_connection.php");
+            require_once("/var/www/private/db_connection.php");
             $this->db_servername = $db_servername;
             $this->db_username = $db_username;
             $this->db_password = $db_password;

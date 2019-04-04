@@ -1,7 +1,7 @@
 <?php
     session_start();
-    
+
     session_unset();
     session_destroy();
-    header("Location: http://varaamo.palikka.org/index.php");
+    header("Location:index.php");
 ?>
