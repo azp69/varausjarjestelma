@@ -72,5 +72,38 @@
             }
             $connection->close();
         }
+
+        public function KirjauduSisaan($tunnus, $salasana)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $user = mysqli_real_escape_string($connection, $tunnus);
+            $pass = mysqli_real_escape_string($connection, $salasana);
+
+            $query = "SELECT * FROM Kayttajatunnus WHERE tunnus = '$user' AND salasana = '$pass'";
+
+            $result = $connection->query($query);
+            
+            
+            if ($result->num_rows > 0) 
+            {
+                while($row = $result->fetch_assoc()) {
+                    $luokka = $row["luokka"];
+                    $connection->close();
+                    return $luokka;
+                }
+            } 
+        
+            else 
+            {
+                return null;
+            }
+            $connection->close();
+        }
     }
 ?>

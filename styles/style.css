@@ -38,16 +38,27 @@ a:link, a:visited
     height: 200px;
 }
 
+.banner > p
+{
+    padding-top:1em;
+    margin-left:15%;
+    font-family:verdana;
+    font-size:4em;
+    color: var(--main-primary-2);
+}
+
 .navi /* navi container */
 {
-    margin-left: 23%;
-    margin-right: 23%;
+    margin-left: 0%;
+    margin-right: 0%;
     text-align: center;
     margin-bottom:0;
+    position:relative;
 }
 
 .navilink /* oletuslinkki navissa */
 {
+    position:relative;
     display:inline-block;
     color: var(--main-primary-3);
     padding: 1em;
@@ -55,25 +66,26 @@ a:link, a:visited
     font-size: 1em;
     text-align: center;
     background-color: var(--main-primary-2);
-
-    -webkit-transition: background-color 250ms linear;
-    -moz-transition: background-color 250ms linear;
-    -o-transition: background-color 250ms linear;
-    -ms-transition: background-color 250ms linear;
-    transition: background-color 250ms linear;
-
+    width:6em;
 }
 
 .navilink_selected /* valittu linkki navissa */
 {
+    position:relative;
     display:inline-block;
-    color: var(--main-primary-0);
+    color: var(--main-primary-1);
     padding: 1em;
     font-family: arial;
     font-size: 1em;
     text-align: center;
-    background-color: var(--main-primary-3);
+    background-color: var(--main-primary-1);
+    width:6em;
+}
 
+.navilink_selected:hover /* hover navissa */
+{
+    background-color: var(--main-primary-4);
+    color:var(--main-primary-0);
     
 }
 
@@ -87,15 +99,17 @@ a:link, a:visited
 .main_container
 {
     margin-top:0;
-    margin-left: 23%;
-    margin-right: 23%;
+    margin-left: 25%;
+    margin-right: 25%;
     background-color: var(--main-primary-0);
 }
 
 .loginscreen
 {
+    display:inline-block;
     font-family:arial;
     text-align:center;
+    width:100%;
     color: var(--main-text-color);
 }
 
@@ -138,4 +152,39 @@ a:link, a:visited
 .erotin
 {
     border: 1px solid var(--main-primary-3);;
+}
+
+.navi_submenu
+{
+    position:absolute;
+    display:block;
+    color: var(--main-primary-3);
+    padding: 1em;
+    font-family: arial;
+    font-size: 1em;
+    text-align: center;
+    background-color: var(--main-primary-4);
+    left:0;
+    width:100%;
+    margin:0;
+    padding:0;
+    border: none;
+    border-radius: 0 0 10px 10px;
+    opacity:0.95;
+}
+
+.navi_submenu > p
+{
+    color:var(--main-primary-1);
+    background-color: var(--main-primary-4);
+}
+
+.navi_submenu > p:hover
+{
+    background-color: var(--main-primary-3);
+    -webkit-transition: background-color 80ms linear;
+    -moz-transition: background-color 80ms linear;
+    -o-transition: background-color 80ms linear;
+    -ms-transition: background-color 80ms linear;
+    transition: background-color 80ms linear;
 }
