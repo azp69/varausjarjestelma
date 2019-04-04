@@ -1,11 +1,16 @@
 <?php
-session_start();
+    session_start();
+    include_once('modules/perustiedot.php');
 ?>
 
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Otsikko</title>
+        <title>
+            <?php
+                echo $sivuston_nimi;
+            ?>
+        </title>
         <link rel="stylesheet" type="text/css" href="styles/style.css">
         <script src="scripts/menuscript.js"></script>
     </head>
@@ -13,11 +18,15 @@ session_start();
     <body>
         <div id="header" class="header">
             <div id="banner" class="banner">
-                <p>Mökkivaraamo</p>
+                <p>
+                    <?php
+                        echo $sivuston_nimi;
+                    ?>
+            </p>
             </div>
 
             <?php
-                if ($_SESSION["luokka"] > 0)
+                if ($_SESSION["luokka"] > 0) // Mikäli ollaan kirjauduttu sisään, näytetään valikko
                 {
                     include("navi.php");
                 }
@@ -32,13 +41,13 @@ session_start();
 
             <?php
             
-            if ($_SESSION["luokka"] > 0)
+            if ($_SESSION["luokka"] > 0) // Ollaan sisällä
                 {
-                    echo "Sisällä<br />";
+                    echo "<h1>Hei, " . $_SESSION["tunnus"] . "</h1>";
                     echo "<a href='logout.php'>Kirjaudu ulos</a>";
                 }
                 else
-                {
+                { // Ei olla kirjauduttu, joten näytetään login screeni
 
             ?>
 

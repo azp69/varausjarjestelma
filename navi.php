@@ -1,4 +1,9 @@
 <?php
+    session_start();
+
+    if ($_SESSION["luokka"] > 0)
+    {
+
     
 ?>
 
@@ -69,4 +74,37 @@
             <p>Poista</p>
         </div>
     </div>
+
+    <?php
+    }
+    else
+    {
+
+    }
+
+    if ($_SESSION["luokka"] > 1) // admin valikko
+    {
+
+    ?>
+
+    <div class="navilink" onmouseover="avaaValikko('admin_submenu')" onmouseout="suljeValikko('admin_submenu')">
+        <a href="?">
+            <p>Admin</p>
+        </a>
+        <div class="navi_submenu" id="admin_submenu" style="display:none;">
+            <p>Listaa</p>
+            <p>Lisää</p>
+            <p>Muokkaa</p>
+            <p>Poista</p>
+        </div>
+    </div>
+
+        <?php
+    }
+    else
+    {
+
+    }
+?>
+
 </div>

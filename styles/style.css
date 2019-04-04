@@ -98,15 +98,32 @@ a:link, a:visited
 
 .main_container
 {
-    margin-top:0;
+    margin-top:5em;
     margin-left: 25%;
     margin-right: 25%;
     background-color: var(--main-primary-0);
+
+    font-family:arial;
+    font-size:1em;
+    color: var(--main-text-color);
+}
+
+.main_container > h1
+{
+    font-family:arial;
+    font-size:3em;
+    color: var(--main-text-color);
+}
+
+.main_container > h2
+{
+    font-family:arial;
+    font-size:2em;
+    color: var(--main-text-color);
 }
 
 .loginscreen
 {
-    display:inline-block;
     font-family:arial;
     text-align:center;
     width:100%;

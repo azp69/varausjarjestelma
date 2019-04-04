@@ -10,14 +10,7 @@
         $passu = hash('sha256', $suola . $_POST['salasana']);
         $luokka = $tk->KirjauduSisaan($_POST['tunnus'], $passu);
         
-        if ($luokka != null)
-        {
-            $_SESSION["luokka"] = $luokka;
-            header("Location:index.php");
-        }
-        else
-        {
-            header("Location:index.php");
-        }
+
+        header("Location:index.php");
     }
 ?>

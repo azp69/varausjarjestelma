@@ -1,5 +1,5 @@
 <?php
-
+    
     class Tietokanta
     {
         
@@ -94,8 +94,12 @@
             {
                 while($row = $result->fetch_assoc()) {
                     $luokka = $row["luokka"];
+                    $tunnus = $row["tunnus"];
+
+                    $_SESSION["luokka"] = $luokka;
+                    $_SESSION["tunnus"] = $tunnus;
                     $connection->close();
-                    return $luokka;
+                    
                 }
             } 
         
