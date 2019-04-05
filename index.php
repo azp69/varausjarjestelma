@@ -25,6 +25,7 @@
             </p>
             </div>
 
+            <!-- Ylämenu -->
             <?php
                 if ($_SESSION["luokka"] > 0) // Mikäli ollaan kirjauduttu sisään, näytetään valikko
                 {
@@ -35,42 +36,38 @@
                     
                 }
             ?>
+            <!-- End of ylämenu -->
 
         </div>
         <div id="main_container" class="main_container">
+        <!-- Sisältö -->
 
             <?php
-            
             if ($_SESSION["luokka"] > 0) // Ollaan sisällä
                 {
-                    echo "<h1>Hei, " . $_SESSION["tunnus"] . "</h1>";
-                    echo "<a href='logout.php'>Kirjaudu ulos</a>";
+                    if($_GET["sivu"] != "") // Ollaan kirjauduttu ja halutaan näyttää joku alasivu
+                    {
+                        if (file_exists($_GET["sivu"].".php") && $_GET["sivu"] != "index") // Ei sallita indexiä
+                        {
+                            include($_GET["sivu"].".php");
+                        }
+                    }
+                    else
+                    {
+                        // todo, joku hieno welcome sivu
+                        // include("welcome.php");
+                        echo "<h1>Hei, " . $_SESSION["tunnus"] . "</h1>";
+                        echo "<a href='logout.php'>Kirjaudu ulos</a>";
+                    }
                 }
-                else
-                { // Ei olla kirjauduttu, joten näytetään login screeni
-
-            ?>
-
-            <div id="loginscreen" class="loginscreen">
-                <h2>Tervetuloa!</h2>
-                Kirjaudu sisään, ole hyvä.
-                <hr class="erotin" />
-                <br />
-                <br />
-                <form action="login.php" method="post">
-                    Käyttäjätunnus<br />
-                    <input type="text" name="tunnus" class="textinput" /><br />
-                    Salasana<br />
-                    <input type="password" name="salasana" class="textinput" /><br />
-                    <br />
-                    <input type="submit" name="submit" value="Kirjaudu" class="button_default" />
-                </form>                
-            </div>
-
-            <?php
+                
+                else // Ei olla kirjauduttu, joten näytetään login screeni
+                { 
+                    include("loginscreen.php");
                 }
             ?>
 
+        <!-- End of sisältö -->
         </div>
     </body>
 </html>
