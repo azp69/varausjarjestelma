@@ -205,3 +205,41 @@ a:link, a:visited
     -ms-transition: background-color 80ms linear;
     transition: background-color 80ms linear;
 }
+
+.kalenteri > table
+{
+    padding: 1em;
+    border: 1px solid var(--main-primary-4);
+    border-radius: 10px;
+}
+
+.kalenteri > table > tr > td
+{
+    color:var(--main-primary-4);
+    background-color: var(--main-primary-2);
+    border-color:var(--main-primary-1);
+    border: 1px solid;
+    width: 2em;
+}
+
+.kalenteri > table > tr > td:hover
+{
+    color:var(--main-primary-3);
+    background-color: var(--main-primary-1);
+    border-color:var(--main-primary-1);
+    border: 1px solid;
+    width: 2em;
+}
+.kalenteri > table > tr > td:hover > a
+{
+    color:var(--main-primary-2);
+}
+
+.kalenteri_container
+{
+    text-align:center;
+}
+.kalenteri_container > table
+{
+    text-align:center;
+}
