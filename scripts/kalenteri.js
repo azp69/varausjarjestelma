@@ -1,7 +1,7 @@
 function luoKalenteri(inputti, kkOffset) // inputti = aloitus / lopetuspvm, kkOffset = kuukauden offset vrt. nyt
 {
-    var varauksenAlkupaiva = new Date(document.getElementById('alkupvm').value); // varauksen alkupäivä
-    var varauksenLoppupaiva = new Date(document.getElementById('loppupvm').value); // varauksen loppupäivä
+    var varauksenAlkupaiva = new Date(document.getElementById('alkupvm').value + " 00:00"); // varauksen alkupäivä
+    var varauksenLoppupaiva = new Date(document.getElementById('loppupvm').value + " 00:00"); // varauksen loppupäivä
     
     var kuukaudenOffset = 0;
     if (kkOffset == null)
@@ -39,6 +39,7 @@ function luoKalenteri(inputti, kkOffset) // inputti = aloitus / lopetuspvm, kkOf
         var taulukonSarake = document.createElement("td");
         taulukonRivi.appendChild(taulukonSarake);
         taulukonSarake.textContent = viikonpaivat[i];
+        taulukonSarake.style = "font-weight:bold";
     }    
 
     taulukonRivi = document.createElement("tr");
@@ -47,32 +48,43 @@ function luoKalenteri(inputti, kkOffset) // inputti = aloitus / lopetuspvm, kkOf
     var juoksevaPaiva = 0;
     var kkPaiva = 1;
 
-
     if (kkEkaViikonpaiva == 0)
         kkEkaViikonpaiva = 7; // vakiona viikko alkaa sunnuntaista, eli 0, joten muutetaan sunnuntai == 7
     do
     {
         var linkki = document.createElement("a");
         var taulukonSarake = document.createElement("td");
-        taulukonRivi.appendChild(taulukonSarake);
-
+        
         if (juoksevaPaiva >= kkEkaViikonpaiva -1)
         {
             linkki.setAttribute('href', '#');
             taulukonSarake.onclick = function() { valitsePaiva(inputti, this) };
             
             var paivaString = muodostaPaivamaara(kkEkaPaiva, kkPaiva);
-            var paivamaara = new Date(paivaString);
+            var paivamaara = new Date(paivaString + " 00:00");
 
             taulukonSarake.setAttribute('id', paivaString);
             
-            if (varauksenAlkupaiva <= paivamaara && varauksenLoppupaiva >= paivamaara)
-                taulukonSarake.setAttribute("style", "background-color: #F00");
-            
+            for (var i = 0; i < varaukset.length; i++)
+            {
+                var alkupaiva = new Date(varaukset[i].alkupaiva + " 00:00");
+                var loppupaiva = new Date(varaukset[i].loppupaiva + " 00:00");
+
+                if ((paivamaara >= alkupaiva) && (paivamaara <= (loppupaiva - 1)))
+                {
+                    taulukonSarake.setAttribute("style", "background-color: #F00");
+                }
+            }
+
+            if (varauksenAlkupaiva <= paivamaara && (varauksenLoppupaiva) >= paivamaara)
+                taulukonSarake.setAttribute("style", "background-color: #0F0");
+                        
             linkki.textContent = kkPaiva++;
             taulukonSarake.appendChild(linkki);
         }
-              
+
+        taulukonRivi.appendChild(taulukonSarake);
+
         juoksevaPaiva++;  
         if (juoksevaPaiva % 7 == 0)
         {
@@ -91,7 +103,42 @@ function valitsePaiva(inp, el)
 {
     var inputti = document.getElementById(inp);
     inputti.value = el.id;
-    luoKalenteri(inp, 0);
+        
+    var alkupaiva = new Date(document.getElementById("alkupvm").value + " 00:00");
+    var loppupaiva = new Date(document.getElementById("loppupvm").value + " 00:00");
+                
+    var konflikti = false;
+
+    for (var i = 0; i < varaukset.length; i++)
+    {
+        var varattuAlkupaiva = new Date(varaukset[i].alkupaiva);
+        var varattuLoppupaiva = new Date(varaukset[i].loppupaiva);
+    
+        
+        if (alkupaiva <= varattuAlkupaiva && loppupaiva >= varattuLoppupaiva)
+        {
+            console.log("Konflikti edellisen varauksen kanssa.");
+            konflikti = true;
+        }
+        if (loppupaiva > varattuAlkupaiva && loppupaiva <= varattuLoppupaiva)
+        {
+            konflikti = true;
+        }
+        if (alkupaiva < varattuLoppupaiva && loppupaiva > varattuLoppupaiva)
+        {
+            konflikti = true;
+        }
+
+    }
+
+    if (!konflikti)
+        luoKalenteri(inp, 0);
+    else
+    {
+        document.getElementById("alkupvm").value = "";
+        document.getElementById("loppupvm").value = "";
+    }
+        
 }
 
 function sulje()
