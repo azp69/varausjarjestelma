@@ -23,8 +23,9 @@
 
     }
 
-    else if ($_GET['toimipiste'] && $_GET['palveluid'])
+    else if ($_GET['toimipiste'] && $_GET['palveluid']) // toimipiste ja palvelu valittuna
     {
+        
 
         ?>
         <script>
@@ -48,7 +49,14 @@
             echo "varaukset.push(v);\n";
         }
         echo "</script>\n";
+                
 
+        $toimipiste = $tk->HaeToimipiste($_GET['toimipiste']);
+        $palvelu = $tk->haePalvelu($_GET['palveluid']);
+
+        echo "Valittu toimipiste: <b>" . $toimipiste->getNimi() . "</b><br />";
+        echo "Valittu palvelu: <b>" . $palvelu->getNimi() . "</b><br />";        
+        
         include('kalenteri.php');
     }
     
@@ -56,6 +64,7 @@
     {
         ?>
         <h2>Valitse majoitus</h2>
+        
         <?php
 
         $palvelunTyyppi = 1;
@@ -68,28 +77,7 @@
         }
         
     }
-
-    
-
-    /*
-    $palvelut = $tk->ListaaPalvelut($toimipisteid);
-    $asiakkaat = $tk->ListaaAsiakkaat();
-    
-
-    foreach ($palvelut as $rivi)
-    {
-        $palvelu_id = $rivi["palvelu_id"];
-        $toimipiste_id = $rivi["toimipiste_id"];
-        $nimi = $rivi["nimi"];
-        $tyyppi = $rivi["tyyppi"];
-        $kuvaus = $rivi["kuvaus"];
-        $hinta = $rivi["hinta"];
-        $alv = $rivi["alv"];
-
-        echo "Palveluid: " . $palvelu_id . "<br />Toimipisteid: " . $toimipiste_id . "<br />Nimi:  " . $nimi  ."<br />";
-        
-    }
-    */
-
+   
+ 
 ?>
 
