@@ -1,41 +1,4 @@
-<script>
-function haeAsiakas(str)
-{
-    if (str.length == 0) { 
-        document.getElementById("asiakascontainer").innerHTML = "";
-        return;
-    } else {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("asiakascontainer").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET", "haeasiakkaat.php?q=" + str, true);
-        xmlhttp.send();
-    }
-}
-
-function haePalvelut()
-{
-    var s = document.getElementById('toimipiste');
-    var str = s.options[s.selectedIndex].value;
-
-    if (str.length == 0) { 
-        document.getElementById("majoituscontainer").innerHTML = "";
-        return;
-    } else {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("majoituscontainer").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET", "haepalvelut.php?p=1&q=" + str, true);
-        xmlhttp.send();
-    }
-}
-
+<script src="scripts/varaus.js">
 </script>
 
 <h2>Valitse asiakas</h2>
@@ -48,10 +11,10 @@ Etsi asiakasta nimellä: <br />
 
 <h2>Valitse toimipiste</h2>
 
-<select id="toimipiste" onclick="haePalvelut()">
+<select id="toimipiste" onclick="haePalvelut(); haeLisapalvelut();">
 
 <?php
-    haePalvelut();
+    haeToimipisteet();
 ?>
 
 </select>
@@ -62,12 +25,29 @@ Etsi asiakasta nimellä: <br />
 <div id="majoituscontainer">
 </div>
 
-Palvelun varauskalenteri
+<h3>Palvelun varauskalenteri</h3>
+<script src="scripts/kalenteri.js"></script>
+<script>
+const varaus = {
+                alkupaiva: '',
+                loppupaiva: ''
+            }
+
+            var varaukset = [];
+            var v;
+</script>
+<script id="scriptcontainer"></script>
+
+<?php include('kalenteri.php'); ?>
+<hr />
+
+<h2>Valitse lisäpalvelut</h2>
+<div id="lisapalvelucontainer"></div>
 <hr />
 
 <?php
     
-    function haePalvelut()
+    function haeToimipisteet()
     {
         include_once("modules/tietokanta.php");
         include_once("modules/palvelu.php");
@@ -82,4 +62,5 @@ Palvelun varauskalenteri
             echo "<option value='" . $tp->getToimipisteId() . "'>" . $tp->getNimi() . "</option>\n";
         }
     }
+    
 ?>
