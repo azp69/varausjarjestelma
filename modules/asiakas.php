@@ -1,6 +1,6 @@
 <?php 
 
-class Asiakkaat {
+class Asiakas {
 
     public function __construct($asiakas_id, $etunimi, $sukunimi, $lahiosoite, $postitoimipaikka, $postinro, $email, $puhelinnro) {
         $this->asiakas_id = $asiakas_id;

@@ -1,83 +1,85 @@
+<script>
+function haeAsiakas(str)
+{
+    if (str.length == 0) { 
+        document.getElementById("asiakascontainer").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("asiakascontainer").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "haeasiakkaat.php?q=" + str, true);
+        xmlhttp.send();
+    }
+}
+
+function haePalvelut()
+{
+    var s = document.getElementById('toimipiste');
+    var str = s.options[s.selectedIndex].value;
+
+    if (str.length == 0) { 
+        document.getElementById("majoituscontainer").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("majoituscontainer").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "haepalvelut.php?p=1&q=" + str, true);
+        xmlhttp.send();
+    }
+}
+
+</script>
+
+<h2>Valitse asiakas</h2>
+Etsi asiakasta nimellä: <br />
+<input type="text" name="asiakas" value="" onkeyup="haeAsiakas(this.value)" />
+<div id="asiakascontainer">
+</div>
+
+<hr />
+
+<h2>Valitse toimipiste</h2>
+
+<select id="toimipiste" onclick="haePalvelut()">
+
 <?php
+    haePalvelut();
+?>
 
-    include_once("modules/tietokanta.php");
-    include_once("modules/palvelu.php");
-    include_once("modules/toimipiste.php");
+</select>
+<hr />
 
-    $tk = new Tietokanta;
+<h2>Valitse majoitus</h2>
 
-    if ($_GET['toimipiste'] == "")
+<div id="majoituscontainer">
+</div>
+
+Palvelun varauskalenteri
+<hr />
+
+<?php
+    
+    function haePalvelut()
     {
+        include_once("modules/tietokanta.php");
+        include_once("modules/palvelu.php");
+        include_once("modules/toimipiste.php");
+        $tk = new Tietokanta;
         $toimipisteet = array();
 
         $toimipisteet = $tk->HaeToimipisteet();
     
-        ?>
-        <h2>Valitse toimipiste</h2>
-    
-        <?php
         foreach ($toimipisteet as $tp)
-        {
-            echo "<a href='?sivu=varaukset&toimipiste=" . $tp->getToimipisteId() . "'>" . $tp->getNimi() . "</a><br />";
+        {   
+            echo "<option value='" . $tp->getToimipisteId() . "'>" . $tp->getNimi() . "</option>\n";
         }
-
     }
-
-    else if ($_GET['toimipiste'] && $_GET['palveluid']) // toimipiste ja palvelu valittuna
-    {
-        
-
-        ?>
-        <script>
-            const varaus = {
-                alkupaiva: '',
-                loppupaiva: ''
-            }
-
-            var varaukset = [];
-            var v;
-        
-        <?php
-
-        $varauskalenteri = $tk->HaePalvelunVarauskalenteri($_GET['palveluid']);
-        
-        foreach ($varauskalenteri as $varaus)
-        {
-            echo "v = Object.create(varaus);\n";
-            echo "v.alkupaiva = '" . $varaus["varauksen_aloituspvm"] . ";'\n";
-            echo "v.loppupaiva = '" . $varaus["varauksen_lopetuspvm"] . ";'\n";
-            echo "varaukset.push(v);\n";
-        }
-        echo "</script>\n";
-                
-
-        $toimipiste = $tk->HaeToimipiste($_GET['toimipiste']);
-        $palvelu = $tk->haePalvelu($_GET['palveluid']);
-
-        echo "Valittu toimipiste: <b>" . $toimipiste->getNimi() . "</b><br />";
-        echo "Valittu palvelu: <b>" . $palvelu->getNimi() . "</b><br />";        
-        
-        include('kalenteri.php');
-    }
-    
-    else
-    {
-        ?>
-        <h2>Valitse majoitus</h2>
-        
-        <?php
-
-        $palvelunTyyppi = 1;
-        $palvelut = array();
-        $palvelut = $tk->haeToimipisteeseenKuuluvatPalvelut($_GET['toimipiste'], $palvelunTyyppi);
-
-        foreach ($palvelut as $palvelu)
-        {
-            echo "<a href='?sivu=varaukset&toimipiste=" . $_GET['toimipiste'] . "&palveluid=" . $palvelu->getPalveluId() . "'> " . $palvelu->getNimi() . "</a><br />";
-        }
-        
-    }
-   
- 
 ?>
-

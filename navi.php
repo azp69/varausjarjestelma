@@ -43,7 +43,7 @@
     </div>
 
     <div class="navilink" onmouseover="avaaValikko('varaukset_submenu')" onmouseout="suljeValikko('varaukset_submenu')">
-        <a href="?">
+        <a href="?sivu=varaukset">
             <p>Varaukset</p>
         </a>
         <div class="navi_submenu" id="varaukset_submenu" style="display:none;">

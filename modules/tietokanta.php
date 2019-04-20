@@ -147,6 +147,42 @@
             return $varauskalenteri;
         }
 
+        public function HaeAsiakkaat($hakusana)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+            
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+            $q = mysqli_real_escape_string($connection, $hakusana);
+            $query = "SELECT * FROM Asiakas WHERE etunimi LIKE '" . $q . "%' OR sukunimi LIKE '" . $q . "%'";
+
+            $result = $connection->query($query);
+
+            $asiakkaat = array();
+
+            $i = 0;
+
+            if ($result->num_rows > 0) 
+            {
+                while($row = $result->fetch_assoc()) 
+                {
+                    $asiakas = new Asiakas($row["asiakas_id"], $row["etunimi"], $row["sukunimi"], $row["lahiosoite"], $row["postitoimipaikka"], $row["postinro"], $row["email"], $row["puhelinnro"]);
+                    $asiakkaat[$i++] = $asiakas;
+                } 
+            } 
+
+            else {
+                $asiakkaat = null;
+                echo "Ei yhtään tulosta.";
+            }
+
+            $connection->close();
+
+            return $asiakkaat;
+        }
+
         // Tommin osaa
 
         /** 
