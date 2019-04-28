@@ -72,4 +72,5 @@ function haeKalenteri()
         xmlhttp.open("GET", "haekalenteri.php?q=" + str, true);
         xmlhttp.send();
     }
+    //document.getElementById('alkupvm').focus();
 }

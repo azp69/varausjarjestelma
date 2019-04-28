@@ -1,10 +1,6 @@
 <?php
-
-    
-
     class Tietokanta
     {
-        
         public function __construct()
         {
             require_once("/var/www/private/db_connection.php");
@@ -86,7 +82,7 @@
 
             else {
                 $varauskalenteri = null;
-                echo "Ei yhtään tulosta.";
+                //echo "Ei yhtään tulosta.";
             }
 
             $connection->close();
@@ -107,7 +103,11 @@
                 die("Ei saada yhteyttä tietokantaan.");
             }
             $q = mysqli_real_escape_string($connection, $hakusana);
-            $query = "SELECT * FROM Asiakas WHERE etunimi LIKE '" . $q . "%' OR sukunimi LIKE '" . $q . "%'";
+            $nimet = explode(" ", $q);
+            $query = "SELECT * FROM Asiakas WHERE 
+            (etunimi LIKE '" . $q . "%' OR sukunimi LIKE '" . $q . "%') OR 
+            (etunimi LIKE '$nimet[0]' AND sukunimi LIKE '$nimet[1]%') OR 
+            (sukunimi LIKE '$nimet[0]' AND etunimi LIKE '$nimet[1]%');";
 
             $result = $connection->query($query);
 
@@ -132,6 +132,113 @@
             $connection->close();
 
             return $asiakkaat;
+        }
+
+        
+        function LisaaVarausMokinVarauskalenteriin($varaus_id, $majoitus_id, $varattu_alkupvm, $varattu_loppupvm, $connection)
+        {
+            // $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $sql = "INSERT INTO mokin_varauskalenteri (palvelu_id, varaus_id, varauksen_aloituspvm, varauksen_lopetuspvm) 
+            VALUES ('$majoitus_id', '$varaus_id', '$varattu_alkupvm 16:00:00', '$varattu_loppupvm 12:00:00');";
+
+            if ($connection->query($sql) === TRUE)
+            {
+                // OK
+            }
+            else
+            {
+                echo "Virhe lisätessä tietoa.";
+            }
+
+            // $connection->close();
+        }
+        
+        function LisaaVaraus($asiakas_id, $toimipiste_id, $varattu_pvm, $vahvistus_pvm, $varattu_alkupvm, $varattu_loppupvm, $majoitusid, $palvelut, $lkm)
+        {
+            // $majoitusid = majoituksen palvelu_id
+            // $palvelut = array palveluista (palvelu_id), jos on monta samaa palvelua, niin ne luetellaan vaan moneen kertaan
+
+            // Varaus: varaus_id, asiakas_id, toimipiste_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm
+            // mokin_varauskalenteri: palvelu_id, varauksen_aloituspvm, varauksen_lopetuspvm
+            // varauksen_palvelut: palvelu_id, varaus_id, lkm
+            
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+            
+            $asiakas_id = mysqli_real_escape_string($connection, $asiakas_id);
+            $toimipiste_id = mysqli_real_escape_string($connection, $toimipiste_id);
+            $varattu_pvm = mysqli_real_escape_string($connection, $varattu_pvm);
+            $vahvistus_pvm = mysqli_real_escape_string($connection, $vahvistus_pvm);
+            $varattu_alkupvm = mysqli_real_escape_string($connection, $varattu_alkupvm);
+            $varattu_loppupvm = mysqli_real_escape_string($connection, $varattu_loppupvm);
+            $majoitusid = mysqli_real_escape_string($connection, $majoitusid);
+
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $sql = "INSERT INTO Varaus (asiakas_id, toimipiste_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm) 
+            VALUES ('$asiakas_id', '$toimipiste_id', '$varattu_pvm', '$vahvistus_pvm', '$varattu_alkupvm 16:00:00', '$varattu_loppupvm 12:00:00');";
+
+            $varausid = "";
+
+            if ($connection->multi_query($sql) === TRUE) 
+            {
+                $varausid = $connection->insert_id;
+                $this->LisaaVarausMokinVarauskalenteriin($varausid, $majoitusid, $varattu_alkupvm, $varattu_loppupvm, $connection); // Lisätään majoituksen varaus varauskalenteriin
+                $this->LisaaPalvelutVaraukseen($varausid, $palvelut, $lkm, $varattu_alkupvm, $varattu_loppupvm, $majoitusid, $connection); // Lisätään palvelut varaukseen
+            }
+            else 
+            {
+                echo "Error: " . $sql . "<br>" . $connection->error;
+            }
+
+            $connection->close();
+            
+        }
+
+        function LisaaPalvelutVaraukseen($varaus_id, $palvelut, $lkm, $varattu_alkupvm, $varattu_loppupvm, $majoitusid, $connection)
+        {
+            // varauksen_palvelut: palvelu_id, varaus_id, lkm
+            // $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            // $majoitusvuorokaudet = 
+            $a = strtotime($varattu_alkupvm);
+            $b = strtotime($varattu_loppupvm);
+            $majoitusvuorokaudet = round(($b - $a) / (60 * 60 * 24));
+            
+            $sql = "INSERT INTO Varauksen_palvelut (palvelu_id, varaus_id, lkm)
+            VALUES ($majoitusid, $varaus_id, $majoitusvuorokaudet);"; // Majoituspalvelut
+                                    
+            for ($i = 0; $i < sizeof($palvelut); $i++) // Lisäpalvelut
+            {
+                if ($lkm[$i] != null)
+                {
+                    $palveluid = mysqli_real_escape_string($connection, $palvelut[$i]);
+                    $palvelunlkm = mysqli_real_escape_string($connection, $lkm[$i]);
+                    $sql .= "INSERT INTO Varauksen_palvelut (palvelu_id, varaus_id, lkm)
+                    VALUES ($palveluid, $varaus_id, $palvelunlkm);";
+                }
+            }
+
+            if ($connection->multi_query($sql) === TRUE) 
+            {
+                
+            }
+            else 
+            {
+                echo "Error: " . $sql . "<br>" . $connection->error;
+            }
+            
+
+            // $connection->close();
+
         }
 
         // Tommin osaa

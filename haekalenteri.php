@@ -16,6 +16,8 @@
             echo "v.alkupaiva = '" . $varaus["varauksen_aloituspvm"] . ";'\n";
             echo "v.loppupaiva = '" . $varaus["varauksen_lopetuspvm"] . ";'\n";
             echo "varaukset.push(v);\n";
+            
         }
+        echo "luoKalenteri(null, 0);\n";
     }
 ?>

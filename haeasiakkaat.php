@@ -8,13 +8,16 @@
         
         $tk = new Tietokanta;
         $asiakkaat = $tk->HaeAsiakkaat($_GET['q']);
-
-        echo "<select id='asiakas'>\n";
-
-        foreach ($asiakkaat as $asiakas)
+        
+        if ($asiakkaat != null)
         {
-            echo "<option value='" . $asiakas->getAsiakasId() . "'>". $asiakas->getSukunimi() . " " . $asiakas->getEtunimi() ."</option>\n";
+            echo "<select name='asiakasid' class='dropdownmenu'>\n";
+
+            foreach ($asiakkaat as $asiakas)
+            {
+                echo "<option value='" . $asiakas->getAsiakasId() . "'>". $asiakas->getSukunimi() . " " . $asiakas->getEtunimi() ."</option>\n";
+            }
+            echo "</select>\n";
         }
-        echo "</select>\n";
     }
 ?>

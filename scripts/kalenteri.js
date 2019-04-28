@@ -1,5 +1,8 @@
 function luoKalenteri(inputti, kkOffset) // inputti = aloitus / lopetuspvm, kkOffset = kuukauden offset vrt. nyt
 {
+    if (inputti==null)
+        inputti = "alkupvm";
+
     var varauksenAlkupaiva = new Date(document.getElementById('alkupvm').value + " 00:00"); // varauksen alkupäivä
     var varauksenLoppupaiva = new Date(document.getElementById('loppupvm').value + " 00:00"); // varauksen loppupäivä
     
@@ -57,7 +60,7 @@ function luoKalenteri(inputti, kkOffset) // inputti = aloitus / lopetuspvm, kkOf
         
         if (juoksevaPaiva >= kkEkaViikonpaiva -1)
         {
-            linkki.setAttribute('href', '#');
+            linkki.setAttribute('href', '#kal');
             taulukonSarake.onclick = function() { valitsePaiva(inputti, this) };
             
             var paivaString = muodostaPaivamaara(kkEkaPaiva, kkPaiva);
@@ -96,7 +99,8 @@ function luoKalenteri(inputti, kkOffset) // inputti = aloitus / lopetuspvm, kkOf
     var suljelinkki = document.createElement("a");
     suljelinkki.setAttribute("href", "javascript:sulje()");
     suljelinkki.textContent = "Sulje";
-    kalenteriContainer.appendChild(suljelinkki);
+    // kalenteriContainer.appendChild(suljelinkki);
+   
 }
 
 function valitsePaiva(inp, el)
@@ -128,15 +132,24 @@ function valitsePaiva(inp, el)
         {
             konflikti = true;
         }
+        if (alkupaiva > loppupaiva)
+            konflikti = true;
 
     }
 
     if (!konflikti)
+    {
         luoKalenteri(inp, 0);
+        if (inp=="alkupvm")
+            document.getElementById("loppupvm").focus();
+        else
+        document.getElementById("alkupvm").focus();
+    }
     else
     {
-        document.getElementById("alkupvm").value = "";
+        document.getElementById("alkupvm").value = el.id;
         document.getElementById("loppupvm").value = "";
+        document.getElementById("loppupvm").focus();
     }
         
 }

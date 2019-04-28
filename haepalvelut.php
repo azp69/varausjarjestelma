@@ -8,9 +8,9 @@
         $tk = new Tietokanta;
         $palvelut = $tk->haeToimipisteeseenKuuluvatPalvelut($_GET['q'], $_GET['p']);
 
-        if ($_GET['p'] == 1) // majoitus
+        if ($_GET['p'] == 1) // 1 = majoitus, 2 = muu palvelu
         {
-            echo "<select id='majoitus' onclick='haeKalenteri();'>\n";
+            echo "<select name='majoitusid' id='majoitus' class='dropdownmenu' onclick='haeKalenteri();'>\n";
          
             foreach ($palvelut as $palvelu)
             {
@@ -24,7 +24,9 @@
         {
             foreach ($palvelut as $palvelu)
             {
-                echo "<input type='checkbox' name='lisapalvelu' value='"  . $palvelu->getPalveluId() . "'/>" . $palvelu->getNimi() . "<br />\n";
+                echo "<input type='hidden' name='lisapalveluid[]' value='"  . $palvelu->getPalveluId() . "'/>\n";
+                echo "<li>" . $palvelu->getNimi() . "<input type='text' maxlength=2 class='textinput' style='width:4em' name='lisapalvelu" . $palvelu->getPalveluId() . "'/> kpl</li>\n";
+                //echo "<input type='checkbox' name='lisapalveluid[]' value='"  . $palvelu->getPalveluId() . "'/>" . $palvelu->getNimi() . "<br />\n";
             }
         }
 
