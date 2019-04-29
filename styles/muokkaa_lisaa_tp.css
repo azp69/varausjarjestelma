@@ -1,0 +1,283 @@
+/* toimipaikat.php:n toimipaikkalistauksen muokkausta */
+.listaus {
+    text-align: center;
+    max-width: 750px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.listaus .keskita {
+    margin-top: 1.5em;
+    background-color: var(--main-primary-0);
+    border: 2px solid var(--main-primary-3);
+    border-radius: 8px;
+    padding:0.5em;
+}
+
+.form-container {
+    width: 100%;
+}
+
+/* grid-areat toimipaikan muokkaukselle */
+#textinput-nimi {
+    grid-area: nimi;
+}
+
+#textinput-lahiosoite {
+    grid-area: osoite;
+}
+
+#textinput-postitoimipaikka {
+    grid-area: ptpaikka;
+}
+
+#textinput-postinro {
+    grid-area: postinro;
+}
+
+#textinput-email {
+    grid-area: email;
+}
+
+#textinput-puhelinnro {
+    grid-area: puhelinnro;
+}
+
+#p-nimi {
+    grid-area: pnimi;
+}
+
+#p-lahiosoite {
+    grid-area: posoite;
+}
+
+#p-postitoimipaikka {
+    grid-area: pptpaikka;
+}
+
+#p-postinro {
+    grid-area: ppostinro;
+}
+
+#p-email {
+    grid-area: pemail;
+}
+
+#p-puhelinnro {
+    grid-area: ppuhelinnro;
+}
+
+/* grid-areat palveluiden muokkaukselle */
+
+#textinput-hinta {
+    grid-area: hinta;
+}
+
+#select-alv {
+    grid-area: salv;
+}
+
+#p-kuvaus {
+    grid-area: pkuvaus;
+}
+
+#p-toimipiste {
+    grid-area: ptoimipiste;
+}
+
+#textarea-kuvaus {
+    grid-area: kuvaus;
+}
+
+#p-alv {
+    grid-area: palv;
+}
+
+#p-tyyppi {
+    grid-area: ptyyppi;
+}
+
+#select-tyyppi {
+    grid-area: styyppi;
+}
+
+#select-toimipiste {
+    grid-area: stoimipiste;
+}
+
+.form-container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* muokkaa.php:n muotoilua */
+.grid-container {
+    display: grid;
+    grid-template-areas:
+      'pnimi posoite ppostinro'
+      'nimi osoite postinro'
+      'pptpaikka pemail ppuhelinnro'
+      'ptpaikka email puhelinnro';
+    grid-gap: 10px;
+    padding: 10px;
+    text-align: center;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-bottom: 1.5em;
+}
+
+.grid-container > input, .grid-container > p, .grid-container-palvelut > input, .grid-container-palvelut > p {
+    margin: auto;
+}
+
+.nappi-container {
+    display: inline;
+}
+
+.nappi-container > .linkki > input[type=submit] {
+    background:none;
+    border:0;
+    font-family: Arial;
+    font-size: 1em;
+    color: #8FB98F;
+}
+
+input[type=submit]:hover {
+    cursor: pointer;
+}
+
+
+.form-container > h1, .form-container > p, .form-container > a {
+    text-align: center;
+}
+
+.nappi-container > .linkki {
+    margin-left: auto;
+    margin-right: auto;
+    width: 175px;
+    height: 15px;
+    margin-top: 1.5em;
+    background-color: var(--main-primary-0);
+    border: 2px solid var(--main-primary-3);
+    border-radius: 8px;
+    padding:0.5em;
+    display: inline-block;
+}
+
+/* tiedot.php:n muotoilua */
+.tiedot-container {
+    max-width: 525px;
+    min-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
+
+    background-color: var(--main-primary-0);
+    border: 2px solid var(--main-primary-3);
+    border-radius: 8px;
+    padding-bottom:0.5em;
+    display: block;
+}
+
+#muuttiedot {
+    max-width: 525px;
+    min-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
+    display:inline-grid; 
+    grid-template-columns: 50% 50%; 
+    grid-template-rows: 100%;
+}
+
+#muuttiedot > .tiedot-container {
+    width: 98%;
+    min-width: 5px;
+}
+
+.container {
+    text-align: center;
+}
+
+.hakutulos > a {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.hakutulos {
+    border: 2px solid #8FB98F;
+    border-radius: 8px;
+    margin: 0.5em;
+    padding:0.5em;
+    margin-bottom: 1.5em;
+    width: 70%;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#mokit {
+    float: left;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+#palvelut {
+    float: right;
+    padding-right: 0;
+    margin-right: 0;
+}
+
+/* muokkaapalvelua.php:n muotoilua */
+
+.form-container {
+    text-align: center;
+    max-width: 620px;
+}
+
+.grid-container-palvelut {
+    display: grid;
+    grid-template-areas:
+      'pnimi ptyyppi phinta'
+      'nimi styyppi hinta'
+      'ptoimipiste tyhja palv'
+      'stoimipiste tyhja salv'
+      'pkuvaus pkuvaus pkuvaus'
+      'kuvaus kuvaus kuvaus';
+    grid-gap: 10px;
+    padding: 10px;
+    text-align: center;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.textareainput {
+    width: 100%;
+    font-family: arial;
+    border: 2px solid #8FB98F;
+    border-radius: 8px;
+    margin: 0.5em;
+    padding:0.5em;
+    margin-bottom: 1.5em;
+}
+
+select {
+    border: 2px solid #8FB98F;
+    border-radius: 8px;
+    margin: 0.5em;
+    padding:0.5em;
+    margin-bottom: 1.5em;
+}
+
+#nappi-container-muokkaatoimipisteentietoja, #nappi-container-lisaapalvelu {
+    display: block;
+    margin-bottom: 1em;
+    margin-bottom: 1.5em;
+}

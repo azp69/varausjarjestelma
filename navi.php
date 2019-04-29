@@ -1,9 +1,4 @@
 <?php
-    session_start();
-
-    if ($_SESSION["luokka"] > 0)
-    {
-
     
 ?>
 
@@ -13,10 +8,10 @@
             <p>Toimipaikat</p>
         </a>
         <div class="navi_submenu" id="toimipaikat_submenu" style="display:none;">
-            <p>Listaa</p>
-            <p>Lisää</p>
-            <p>Muokkaa</p>
-            <p>Poista</p>
+            <a href="index.php?sivu=toimipisteet">Listaa</a>
+            <a href="index.php?sivu=muokkaa&id=0">Lisää</a>
+            <a>Muokkaa</a>
+            <a>Poista</a>
         </div>
     </div>
         
@@ -25,10 +20,10 @@
             <p>Mökit</p>
         </a>
         <div class="navi_submenu" id="mokit_submenu" style="display:none;">
-            <p>Listaa</p>
-            <p>Lisää</p>
-            <p>Muokkaa</p>
-            <p>Poista</p>
+            <a href="?">Listaa</a>
+            <a href="index.php?sivu=muokkaapalvelua&id=0">Lisää</a>
+            <a href="?">Muokkaa</a>
+            <a href="?">Poista</a>
         </div>
     </div>
         
@@ -43,7 +38,7 @@
     </div>
 
     <div class="navilink" onmouseover="avaaValikko('varaukset_submenu')" onmouseout="suljeValikko('varaukset_submenu')">
-        <a href="?sivu=varaukset">
+        <a href="?">
             <p>Varaukset</p>
         </a>
         <div class="navi_submenu" id="varaukset_submenu" style="display:none;">
@@ -74,37 +69,4 @@
             <p>Poista</p>
         </div>
     </div>
-
-    <?php
-    }
-    else
-    {
-
-    }
-
-    if ($_SESSION["luokka"] > 1) // admin valikko
-    {
-
-    ?>
-
-    <div class="navilink" onmouseover="avaaValikko('admin_submenu')" onmouseout="suljeValikko('admin_submenu')">
-        <a href="?">
-            <p>Admin</p>
-        </a>
-        <div class="navi_submenu" id="admin_submenu" style="display:none;">
-            <p>Listaa</p>
-            <p>Lisää</p>
-            <p>Muokkaa</p>
-            <p>Poista</p>
-        </div>
-    </div>
-
-        <?php
-    }
-    else
-    {
-
-    }
-?>
-
 </div>

@@ -1,6 +1,9 @@
 <?php
     session_start();
     include_once('modules/perustiedot.php');
+    include_once("modules/toimipiste.php");
+    include_once("modules/palvelu.php");
+    include_once("modules/tietokanta.php");
 ?>
 
 <html>
@@ -12,6 +15,7 @@
             ?>
         </title>
         <link rel="stylesheet" type="text/css" href="styles/style.css">
+        <link rel="stylesheet" type="text/css" href="styles/muokkaa_lisaa_tp.css">
         <script src="scripts/menuscript.js"></script>
     </head>
 
@@ -27,14 +31,9 @@
 
             <!-- Ylämenu -->
             <?php
-                if ($_SESSION["luokka"] > 0) // Mikäli ollaan kirjauduttu sisään, näytetään valikko
-                {
-                    include("navi.php");
-                }
-                else
-                {
-                    
-                }
+
+                include("navi.php");
+
             ?>
             <!-- End of ylämenu -->
 
@@ -43,27 +42,17 @@
         <!-- Sisältö -->
 
             <?php
-            if ($_SESSION["luokka"] > 0) // Ollaan sisällä
+                $tk = new Tietokanta;
+                if($_GET["sivu"] != "") // Ollaan kirjauduttu ja halutaan näyttää joku alasivu
                 {
-                    if($_GET["sivu"] != "") // Ollaan kirjauduttu ja halutaan näyttää joku alasivu
+                    if (file_exists($_GET["sivu"].".php") && $_GET["sivu"] != "index") // Ei sallita indexiä
                     {
-                        if (file_exists($_GET["sivu"].".php") && $_GET["sivu"] != "index") // Ei sallita indexiä
-                        {
-                            include($_GET["sivu"].".php");
-                        }
-                    }
-                    else
-                    {
-                        // todo, joku hieno welcome sivu
-                        // include("welcome.php");
-                        echo "<h1>Hei, " . $_SESSION["tunnus"] . "</h1>";
-                        echo "<a href='logout.php'>Kirjaudu ulos</a>";
+                        include($_GET["sivu"].".php");
                     }
                 }
-                
                 else // Ei olla kirjauduttu, joten näytetään login screeni
                 { 
-                    include("loginscreen.php");
+                    echo "hei";
                 }
             ?>
 

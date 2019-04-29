@@ -11,6 +11,7 @@
 
 body
 {
+    font-family: arial;
     background-color: var(--main-primary-0);
     margin:0px;
 }
@@ -98,32 +99,15 @@ a:link, a:visited
 
 .main_container
 {
-    margin-top:5em;
+    margin-top:0;
     margin-left: 25%;
     margin-right: 25%;
     background-color: var(--main-primary-0);
-
-    font-family:arial;
-    font-size:1em;
-    color: var(--main-text-color);
-}
-
-.main_container > h1
-{
-    font-family:arial;
-    font-size:3em;
-    color: var(--main-text-color);
-}
-
-.main_container > h2
-{
-    font-family:arial;
-    font-size:2em;
-    color: var(--main-text-color);
 }
 
 .loginscreen
 {
+    display:inline-block;
     font-family:arial;
     text-align:center;
     width:100%;
@@ -190,13 +174,18 @@ a:link, a:visited
     opacity:0.95;
 }
 
-.navi_submenu > p
+.navi_submenu > p, .navi_submenu > a
 {
+    display: block;
     color:var(--main-primary-1);
     background-color: var(--main-primary-4);
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
-.navi_submenu > p:hover
+.navi_submenu > p:hover, .navi_submenu > a:hover
 {
     background-color: var(--main-primary-3);
     -webkit-transition: background-color 80ms linear;
@@ -204,60 +193,4 @@ a:link, a:visited
     -o-transition: background-color 80ms linear;
     -ms-transition: background-color 80ms linear;
     transition: background-color 80ms linear;
-}
-
-.kalenteri > table
-{
-    padding: 1em;
-    border: 1px solid var(--main-primary-4);
-    border-radius: 10px;
-}
-
-.kalenteri > table > tr > td
-{
-    color:var(--main-primary-4);
-    background-color: var(--main-primary-2);
-    border-color:var(--main-primary-1);
-    border: 1px solid;
-    width: 2em;
-}
-
-.kalenteri > table > tr > td:hover
-{
-    color:var(--main-primary-3);
-    background-color: var(--main-primary-1);
-    border-color:var(--main-primary-1);
-    border: 1px solid;
-    width: 2em;
-}
-.kalenteri > table > tr > td:hover > a
-{
-    color:var(--main-primary-2);
-}
-
-.kalenteri_container
-{
-    text-align:center;
-}
-.kalenteri_container > table
-{
-    text-align:center;
-}
-
-.dropdownmenu
-{
-    background-color: var(--main-primary-0);
-    font-family: arial;
-    font-size: 0.8em;
-    border: 2px solid var(--main-primary-3);
-    border-radius: 8px;
-    margin: 0.5em;
-    padding:0.5em;
-    width: 15em;
-    margin-bottom: 1.5em;
-}
-
-.dropdownmenu:hover
-{
-    background-color: var(--main-primary-1);
 }
