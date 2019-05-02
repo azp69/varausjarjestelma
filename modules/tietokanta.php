@@ -131,6 +131,71 @@
             return $asiakkaat;
         }
 
+        function PoistaVaraus($varausid)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+            
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $sql = "DELETE FROM Varaus WHERE varaus_id = '$varausid';";
+
+            if ($connection->query($sql) === TRUE) 
+            {
+
+            }
+            else 
+            {
+                echo "Error: " . $sql . "<br>" . $connection->error;
+            }
+
+            $connection->close();
+
+        }
+        function PaivitaVaraus($varausid, $majoitusid, $varauksen_aloituspvm, $varauksen_paattymispvm, $lisapalvelut)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+            
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $sql = "UPDATE Varaus SET varattu_alkupvm='$varauksen_aloituspvm 16:00:00', varattu_loppupvm='$varauksen_paattymispvm 12:00:00' WHERE varaus_id = '$varausid';";
+
+            $sql .= "UPDATE mokin_varauskalenteri SET varauksen_aloituspvm='$varauksen_aloituspvm 16:00:00', varauksen_lopetuspvm='$varauksen_paattymispvm 12:00:00' WHERE varaus_id = '$varausid';";
+
+            $sql .= "DELETE FROM Varauksen_palvelut WHERE varaus_id = '$varausid';";
+
+            $a = strtotime($varauksen_aloituspvm);
+            $b = strtotime($varauksen_paattymispvm);
+            $majoitusvuorokaudet = round(($b - $a) / (60 * 60 * 24));
+            
+            $sql .= "INSERT INTO Varauksen_palvelut (palvelu_id, varaus_id, lkm)
+            VALUES ($majoitusid, $varausid, $majoitusvuorokaudet);"; // Majoituspalvelu
+
+            foreach ($lisapalvelut as $palvelu)
+            {
+                if ($palvelu->getLkm() > 0)
+                {
+                    $sql .= "INSERT INTO Varauksen_palvelut (palvelu_id, varaus_id, lkm)
+                    VALUES (" . $palvelu->getPalveluId() . ", $varausid, " . $palvelu->getLkm() . ");"; // Lisäpalvelut
+                }
+            }
+
+            if ($connection->multi_query($sql) === TRUE) 
+            {
+
+            }
+            else 
+            {
+                echo "Error: " . $sql . "<br>" . $connection->error;
+            }
+
+            $connection->close();
+        }
         
         private function LisaaVarausMokinVarauskalenteriin($varaus_id, $majoitus_id, $varattu_alkupvm, $varattu_loppupvm, $connection)
         {
@@ -272,7 +337,8 @@
                 {
                     // $palvelu_id, $toimipiste_id, $nimi, $tyyppi, $kuvaus, $hinta, $alv)
                     $palvelu = new Palvelu($row["palvelu_id"], $row["toimipiste_id"], $row["nimi"], $row["tyyppi"], $row["kuvaus"], $row["hinta"], $row["alv"]);
-                    $palvelut[] = $palvelu;
+                    $vp = new VarauksenPalvelut($varausid, $palvelu, $row["lkm"]);
+                    $palvelut[] = $vp;
                 }
             }
 

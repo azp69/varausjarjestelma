@@ -144,3 +144,22 @@ function haeVarauksista(str)
         xmlhttp.send();
     }
 }
+
+function poistaVaraus()
+{
+    var varausid = document.getElementById("varausid").value;
+    
+    if (confirm('Haluatko varmasti poistaa varauksen?')) 
+    {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                window.location='?sivu=varaukset';
+            }
+        };
+        xmlhttp.open("GET", "poistavaraus.php?&q=" + varausid, true);
+        xmlhttp.send();
+    } else {
+        // Do nothing!
+    }
+}

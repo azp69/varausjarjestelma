@@ -3,24 +3,43 @@
     include_once('modules/varaus.php');
     include_once('modules/asiakas.php');
     include_once('modules/palvelu.php');
+    include_once('modules/varauksenpalvelut.php');
 
-    if (isset($_POST['submit']) && isset($_POST['asiakasid']))
+    if (isset($_POST['varausid']))
     {
-        $lisapalvelut = array();
-        $lisapalveluidenlkm = array();
+        $aloituspvm = $_POST['alkupvm'];
+        $lopetuspvm = $_POST['loppupvm'];
+        
+        $varauksenpalvelut = array();
 
         foreach ($_POST['lisapalveluid'] as $palveluid)
         {
-            array_push($lisapalvelut, $palveluid);
-            array_push($lisapalveluidenlkm, $_POST['lisapalvelu' . $palveluid]);
+            $varauksenpalvelu = new VarauksenPalvelut($_POST['varausid'], $palveluid, $_POST['lisapalvelu' . $palveluid]);
+            $varauksenpalvelut[] = $varauksenpalvelu;
         }
         
+        foreach ($varauksenpalvelut as $palvelu)
+        {
+            echo $palvelu->getPalveluId() . " " . $palvelu->getLkm() . "<br />";
+        }
+        echo $aloituspvm;
+        echo $lopetuspvm;
+        
+        
         $tk = new Tietokanta;
+
+        $tk->PaivitaVaraus($_POST['varausid'], $_POST['majoitusid'], $aloituspvm, $lopetuspvm, $varauksenpalvelut);
+
         //$tk->LisaaVaraus($_POST['asiakasid'], $_POST['toimipisteid'], date("Y-m-d"), date("Y-m-d"), $_POST['alkupvm'], $_POST['loppupvm'], $_POST['majoitusid'], $lisapalvelut, $lisapalveluidenlkm);
     }
 ?>
 
 <?php
+    if ($_GET['varausid'])
+    {
+    }
+    else
+        die;
 
     $tk = new Tietokanta;
     $varaus = $tk->HaeVaraus($_GET['varausid']);
@@ -49,7 +68,8 @@
 <b>Osoite</b><br />
 <?php echo $asiakas->getLahiosoite(); ?><br />
 <?php echo $asiakas->getPostinro() . " " . $asiakas->getPostitoimipaikka(); ?>
-
+<input type="hidden" id="varausid" name="varausid" value="<?php echo $_GET['varausid']; ?>">
+<input type="hidden" name="majoitusid" value="<?php echo $majoitusid; ?>">
 <hr class="erotin" />
 
 <div id="majoituscontainer">
@@ -104,6 +124,6 @@ const varaus = {
 
 <input type="submit" class="button_default" value="Vahvista" />
 <input type="button" class="button_default" value="Peruuta" onclick="window.location='?sivu=varaukset';" />
-<input type="submit" class="button_default" value="Poista" />
+<input type="button" class="button_default" value="Poista" onclick="poistaVaraus();"/>
 
 </form>
