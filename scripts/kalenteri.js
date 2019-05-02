@@ -2,7 +2,7 @@ function luoKalenteri(inputti, kkOffset) // inputti = aloitus / lopetuspvm, kkOf
 {
     if (inputti==null)
         inputti = "alkupvm";
-
+    
     var varauksenAlkupaiva = new Date(document.getElementById('alkupvm').value + " 00:00"); // varauksen alkupäivä
     var varauksenLoppupaiva = new Date(document.getElementById('loppupvm').value + " 00:00"); // varauksen loppupäivä
     

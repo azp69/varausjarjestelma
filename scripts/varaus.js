@@ -55,6 +55,23 @@ function haeLisapalvelut()
     }
 }
 
+function haeVarauksenLisapalvelut(toimipisteid, varausid)
+{
+    if (toimipisteid.length == 0) { 
+        document.getElementById("lisapalvelucontainer").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("lisapalvelucontainer").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "haepalvelut.php?p=2&q=" + toimipisteid + "&varausid=" + varausid, true);
+        xmlhttp.send();
+    }
+}
+
 function haeKalenteri()
 {
     var s = document.getElementById('majoitus');
@@ -73,4 +90,57 @@ function haeKalenteri()
         xmlhttp.send();
     }
     //document.getElementById('alkupvm').focus();
+}
+
+function haeKalenteriHakusanalla(str)
+{
+    if (str.length == 0) { 
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("scriptcontainer").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "haekalenteri.php?q=" + str, true);
+        xmlhttp.send();
+    }
+}
+
+function haeVaraukset()
+{
+    var s = document.getElementById('toimipiste');
+    var str = s.options[s.selectedIndex].value;
+
+    if (str.length == 0) { 
+        document.getElementById("hakucontainer").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("hakucontainer").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "haevaraukset.php?&toimipiste=" + str, true);
+        xmlhttp.send();
+    }
+}
+
+function haeVarauksista(str)
+{
+    if (str.length == 0) { 
+        document.getElementById("hakucontainer").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("hakucontainer").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "haevaraukset.php?&hakusana=" + str, true);
+        xmlhttp.send();
+    }
 }

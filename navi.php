@@ -47,7 +47,9 @@
             <p>Varaukset</p>
         </a>
         <div class="navi_submenu" id="varaukset_submenu" style="display:none;">
-                
+            <a href="?sivu=luovaraus">
+                <p>Uusi varaus</p>
+            </a>
         </div>
     </div>
 
