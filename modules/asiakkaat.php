@@ -1,6 +1,5 @@
 <?php 
-
-class Asiakas {
+class Asiakkaat {
 
     public function __construct($asiakas_id, $etunimi, $sukunimi, $lahiosoite, $postitoimipaikka, $postinro, $email, $puhelinnro) {
         $this->asiakas_id = $asiakas_id;
@@ -25,7 +24,7 @@ class Asiakas {
     function getEtunimi() {
         return $this->etunimi;
     }
-    
+        
     function getSukunimi() {
         return $this->sukunimi;
     }
@@ -41,9 +40,11 @@ class Asiakas {
     function getPostinro() {
         return $this->postinro;
     }
+
     function getEmail() {
         return $this->email;
     }
+
     function getPuhelinnro() {
         return $this->puhelinnro;
     }
@@ -52,7 +53,7 @@ class Asiakas {
         $this->asiakas_id = $asiakas_id;
     }
 
-    function setEtunimi($etunimi) {
+    function setEtunnimi($etunimi) {
         $this->etunimi = $etunimi;
     }
 
@@ -71,7 +72,7 @@ class Asiakas {
     function setPostinro($postinro) {
         $this->postinro = $postinro;
     }
-    
+        
     function setEmail($email) {
         $this->email = $email;
     }

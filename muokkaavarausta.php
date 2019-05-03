@@ -18,19 +18,10 @@
             $varauksenpalvelut[] = $varauksenpalvelu;
         }
         
-        foreach ($varauksenpalvelut as $palvelu)
-        {
-            echo $palvelu->getPalveluId() . " " . $palvelu->getLkm() . "<br />";
-        }
-        echo $aloituspvm;
-        echo $lopetuspvm;
-        
-        
         $tk = new Tietokanta;
 
-        $tk->PaivitaVaraus($_POST['varausid'], $_POST['majoitusid'], $aloituspvm, $lopetuspvm, $varauksenpalvelut);
-
-        //$tk->LisaaVaraus($_POST['asiakasid'], $_POST['toimipisteid'], date("Y-m-d"), date("Y-m-d"), $_POST['alkupvm'], $_POST['loppupvm'], $_POST['majoitusid'], $lisapalvelut, $lisapalveluidenlkm);
+        if ($tk->PaivitaVaraus($_POST['varausid'], $_POST['majoitusid'], $aloituspvm, $lopetuspvm, $varauksenpalvelut))
+            echo "Varaus päivitettiin onnistuneesti!<br />";
     }
 ?>
 

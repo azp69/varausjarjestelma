@@ -7,7 +7,7 @@
         include_once("modules/asiakas.php");
         
         $tk = new Tietokanta;
-        $asiakkaat = $tk->HaeAsiakkaat($_GET['q']);
+        $asiakkaat = $tk->HaeAsiakkaatHakusanalla($_GET['q']);
         
         if ($asiakkaat != null)
         {

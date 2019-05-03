@@ -94,7 +94,7 @@
         /*
             Etsii asiakasta etu- ja/tai sukunimen perusteella ja palauttaa taulukon Asiakas-objekteista
         */
-        public function HaeAsiakkaat($hakusana)
+        public function HaeAsiakkaatHakusanalla($hakusana)
         {
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
             
@@ -184,10 +184,11 @@
                     VALUES (" . $palvelu->getPalveluId() . ", $varausid, " . $palvelu->getLkm() . ");"; // Lisäpalvelut
                 }
             }
+            $onnistuiko = false;
 
             if ($connection->multi_query($sql) === TRUE) 
             {
-
+                $onnistuiko = true;
             }
             else 
             {
@@ -195,6 +196,8 @@
             }
 
             $connection->close();
+            if ($onnistuiko) 
+                return true;
         }
         
         private function LisaaVarausMokinVarauskalenteriin($varaus_id, $majoitus_id, $varattu_alkupvm, $varattu_loppupvm, $connection)
@@ -295,10 +298,7 @@
         function HaeVaraukseenKuuluvanPalvelunLukumaara($varausid, $palveluid)
         {
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
-            /*
-            SELECT Palvelu.nimi, Palvelu.kuvaus, Palvelu.hinta, Palvelu.alv FROM Palvelu INNER JOIN 
-            Varauksen_palvelut ON Palvelu.palvelu_id = Varauksen_palvelut.palvelu_id WHERE Varauksen_palvelut.varaus_id = id;
-            */
+            
             $query = "SELECT lkm FROM Varauksen_palvelut WHERE varaus_id = '$varausid' AND palvelu_id = '$palveluid';";
 
             $lukumaara = "";
@@ -321,10 +321,7 @@
         function HaeVaraukseenKuuluvatPalvelut($varausid)
         {
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
-            /*
-            SELECT Palvelu.nimi, Palvelu.kuvaus, Palvelu.hinta, Palvelu.alv FROM Palvelu INNER JOIN 
-            Varauksen_palvelut ON Palvelu.palvelu_id = Varauksen_palvelut.palvelu_id WHERE Varauksen_palvelut.varaus_id = id;
-            */
+            
             $query = "SELECT * FROM Palvelu INNER JOIN Varauksen_palvelut ON Palvelu.palvelu_id = Varauksen_palvelut.palvelu_id WHERE Varauksen_palvelut.varaus_id = $varausid;";
 
             $palvelut = array();
@@ -384,21 +381,6 @@
 
         function HaeVarauksista($hakusana)
         {
-            /*
-            
-            Asiakkaan etu- ja sukunimen perusteella haku varauksista
-            SELECT Varaus.varaus_id, Varaus.asiakas_id, Varaus.toimipiste_id, Varaus.varattu_pvm, Asiakas.asiakas_id, Asiakas.etunimi, Asiakas.sukunimi
-            FROM Varaus INNER JOIN Asiakas ON Asiakas.asiakas_id = Varaus.asiakas_id WHERE Asiakas.etunimi = 'Etunimi' AND Asiakas.sukunimi = 'Sukunimi';
-
-            Toimipiste-ID:n perusteella haku varauksista
-            SELECT Varaus.varaus_id, Varaus.asiakas_id, Varaus.toimipiste_id, Varaus.varattu_pvm, Asiakas.asiakas_id, Asiakas.etunimi, Asiakas.sukunimi
-            FROM Varaus INNER JOIN Asiakas ON Asiakas.asiakas_id = Varaus.asiakas_id WHERE Varaus.toimipiste_id = 'toimipisteid';
-
-
-            SELECT Varaus.*, Asiakas.*
-            FROM Varaus INNER JOIN Asiakas ON Asiakas.asiakas_id = Varaus.asiakas_id WHERE Varaus.toimipiste_id = 'toimipisteid';
-            */
-
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
 
             if ($connection->connect_error)
@@ -483,7 +465,326 @@
             $connection->close();
         }
 
+        // Markus
 
+        public function LisaaAsiakas($etunimi, $sukunimi, $lahiosoite, $postitoimipaikka, $postinro, $email, $puhelinnro)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $_etunimi = mysqli_real_escape_string($connection, $etunimi);
+            $_sukunimi = mysqli_real_escape_string($connection, $sukunimi);
+            $_lahiosoite = mysqli_real_escape_string($connection, $lahiosoite);
+            $_postitoimipaikka = mysqli_real_escape_string($connection, $postitoimipaikka);
+            $_postinro = mysqli_real_escape_string($connection, $postinro);
+            $_email = mysqli_real_escape_string($connection, $email);
+            $_puhelinnro = mysqli_real_escape_string($connection, $puhelinnro);
+
+            $query = "INSERT INTO Asiakas (etunimi, sukunimi, lahiosoite, postitoimipaikka, postinro, email, puhelinnro) VALUES ('$_etunimi', '$_sukunimi', '$_lahiosoite', '$_postitoimipaikka', '$_postinro', '$_email', '$_puhelinnro')";
+
+            if($connection->query($query) === TRUE)
+            {
+                echo "<p style='text-align:center';'>Asiakas lisätty onnistuneesti.</p>";
+            }
+            else
+            {
+                echo "<p style='text-align:center';'>Virhe asiakkaan lisäämisessä. Yritä myöhemmin uudelleen.</p>";
+            }
+
+            $connection->close();
+        }
+
+        public function PoistaAsiakas($asiakasid)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+            
+            $_asiakasid = mysqli_real_escape_string($connection, $asiakasid);
+
+            $query = "DELETE FROM Asiakas WHERE asiakas_id= '$_asiakasid'";
+
+            if($connection->query($query) === TRUE)
+            {
+                echo "<p style='text-align:center';'>Asiakas poistettu järjestelmästä.</p>";
+            }
+            else
+            {
+                echo "<p style='text-align:center';'>Virhe asiakkaan poistamisessa. Yritä myöhemmin uudelleen.</p>";
+            }
+
+            $connection->close();
+        }
+        
+        public function PaivitaAsiakas($asiakas) {
+
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+            
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $_asiakasid = $connection->real_escape_string($asiakas->getAsiakasId());
+            $_etunimi = $asiakas->getEtunimi();
+            $_sukunimi = $asiakas->getSukunimi();
+            $_lahiosoite = $asiakas->getLahiosoite();
+            $_postitoimipaikka = $asiakas->getPostitoimipaikka();
+            $_postinro = $asiakas->getPostinro();
+            $_email = $asiakas->getEmail();
+            $_puhelinnro = $asiakas->getPuhelinnro();
+
+            $query = "UPDATE Asiakas SET etunimi='$_etunimi', sukunimi='$_sukunimi', lahiosoite='$_lahiosoite', postitoimipaikka='$_postitoimipaikka', postinro='$_postinro', email='$_email', puhelinnro='$_puhelinnro' WHERE asiakas_id= '$_asiakasid'";
+
+            $result = $connection->query($query);
+
+            if ($result){
+                $message = "<p style='text-align:center';'>Asiakkaan tiedot päivitetty.</p>";
+                
+            } else {
+                $message = "<p style='text-align:center';'>Virhe asiakastietojen päivittämisessä. Yritä myöhemmin uudelleen.</p>";
+            }
+
+            $connection->close();
+            return $message;
+        }
+
+        public function HaeAsiakkaat()
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+        
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+        
+            $query = "SELECT * FROM Asiakas";
+                    
+            $listAsiakkaat = array();
+
+            $result = $connection->query($query);
+                    
+            if ($result->num_rows > 0) 
+            {
+                while($row = $result->fetch_assoc()) {
+                    $asiakas = new Asiakas($row["asiakas_id"], $row["etunimi"], $row["sukunimi"],
+                    $row["lahiosoite"], $row["postitoimipaikka"], $row["postinro"], $row["email"], $row["puhelinnro"]);
+                                
+                    $listAsiakkaat[] = $asiakas;
+                }
+            } 
+            else {
+                $listAsiakkaat = null;
+            }
+            $connection->close();
+                    
+            return $listAsiakkaat;
+        }
+
+        public function HaeAsiakas($asiakkaanID) {
+
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+            
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $query = "SELECT * FROM Asiakas WHERE asiakas_id = '$asiakkaanID'";
+
+            $result = $connection->query($query);
+
+            if ($result->num_rows > 0) 
+            {
+                $row = $result->fetch_assoc();
+                $asiakas = new Asiakas($row["asiakas_id"], $row["etunimi"], $row["sukunimi"], $row["lahiosoite"], 
+                    $row["postitoimipaikka"], $row["postinro"], $row["email"], $row["puhelinnro"]);
+                
+            } 
+            else {
+                $asiakas = null;
+                // echo "Ei yhtään tulosta.";
+            }
+
+            $connection->close();
+
+            return $asiakas;
+        }
+
+
+        // End of Markus
+
+        // Timon osa
+
+        public function HaeLaskut($asiakkaanID)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error)
+            {
+                die("HaeLaskut ei saa yhteyttä tietokantaan.");
+            }
+
+            $query = "SELECT * FROM Lasku WHERE asiakas_id ='$asiakkaanID'";
+
+            $result = $connection->query($query);
+
+            if ($result->num_rows > 0) 
+            {
+                while($row = $result->fetch_assoc()) {
+                    $laskut = new Lasku($row["lasku_id"], $row["asiakas_id"], $row["varaus_id"], $row["nimi"],
+                    $row["lahiosoite"], $row["postitoimipaikka"], $row["postinro"], $row["summa"], $row["alv"]);
+                    $listLaskut[] = $laskut;     
+                
+                }
+            } 
+                
+            else 
+            {
+                echo "Ei laskuja tietokannassa.";
+            }
+            $connection->close();
+
+            return $listLaskut;
+        }
+
+        //Päivittää muokattavan laskun tiedot
+        public function PaivitaLasku($lasku) {
+
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+            
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $lasku_id = $connection->real_escape_string($lasku->getLaskuId());
+            $varaus_id = $connection->real_escape_string($lasku->getVarausId());
+            $asiakas_id = $connection->real_escape_string($lasku->getAsiakasId());
+            $sukunimi = $connection->real_escape_string($lasku->getSukunimi());
+            $lahiosoite = $connection->real_escape_string($lasku->getLahiosoite());
+            $postitoimipaikka = $connection->real_escape_string($lasku->getPostitoimipaikka());
+            $postinro = $connection->real_escape_string($lasku->getPostinro());
+            $summa = $connection->real_escape_string($lasku->getSumma());
+            $alv = $connection->real_escape_string($lasku->getAlv());
+
+            $query = "UPDATE Lasku SET lasku_id='$lasku_id', varaus_id='$varaus_id', asiakas_id='$asiakas_id', nimi='$sukunimi', lahiosoite='$lahiosoite',
+             postitoimipaikka='$postitoimipaikka', postinro='$postinro', summa='$summa', alv='$alv' WHERE lasku_id='$lasku_id'";
+
+            $result = $connection->query($query);
+
+            if ($result){
+                $message = "Tietojen tallentaminen onnistui";
+                
+            } else {
+                $message = "Sattui odottamaton virhe, yritä myöhemmin uudelleen";
+            }
+
+            $connection->close();
+            return $message;
+        }
+
+        //Lisää uuden laskun tietokantaan
+        public function LisaaLasku($lasku) {
+
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+            
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+            
+            $varaus_id = $connection->real_escape_string($lasku->getVarausId());
+            $asiakas_id = $connection->real_escape_string($lasku->getAsiakasId());
+            $sukunimi = $connection->real_escape_string($lasku->getSukunimi());
+            $lahiosoite = $connection->real_escape_string($lasku->getLahiosoite());
+            $postitoimipaikka = $connection->real_escape_string($lasku->getPostitoimipaikka());
+            $postinro = $connection->real_escape_string($lasku->getPostinro());
+            $summa = $connection->real_escape_string($lasku->getSumma());
+            $alv = $connection->real_escape_string($lasku->getAlv()); 
+            
+            $query = "INSERT INTO Lasku (varaus_id, asiakas_id, nimi, lahiosoite, postitoimipaikka, postinro, summa, alv) VALUES ('$varaus_id', '$asiakas_id', '$sukunimi' ,'$lahiosoite', '$postitoimipaikka', '$postinro', '$summa', '$alv')";
+
+            if($connection->query($query) === TRUE)
+            {
+                $message = "Tietojen tallentaminen onnistui";
+            }
+            else
+            {
+                $message = "Sattui odottamaton virhe, yritä myöhemmin uudelleen";
+                echo("Error description: " . mysqli_error($connection)); 
+            }
+
+            $connection->close();
+            return $message;
+        }
+        // Hakee yksittäisen laskun tiedot
+        public function HaeLaskunTiedot($laskunID) {
+
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $query = "SELECT * FROM Lasku WHERE lasku_id='$laskunID'";
+
+            $result = $connection->query($query);
+
+            if ($result->num_rows > 0) 
+            {
+                
+                while($row = $result->fetch_assoc()) {
+                    $laskuntiedot = new Lasku($row["lasku_id"], $row["asiakas_id"], $row["varaus_id"], $row["nimi"],
+                    $row["lahiosoite"], $row["postitoimipaikka"], $row["postinro"], $row["summa"], $row["alv"]);
+                        
+                
+                }
+            } 
+            else 
+            {
+                $laskuntiedot = null;
+            }
+
+            $connection->close();
+            return $laskuntiedot;
+        } 
+        // Poistaa laskun tietokanasta
+        public function PoistaLasku($laskunID) {
+
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $query = "DELETE FROM Lasku WHERE lasku_id='$laskunID'";
+
+            //$result = $connection->query($query);
+
+            if($connection->query($query) === TRUE)
+            {
+                $message = "Tietojen poistaminen onnistui";
+            }
+            else
+            {
+                $message = "Sattui odottamaton virhe, yritä myöhemmin uudelleen";
+            }
+
+            $connection->close();
+            return $message;
+        } 
+
+        // End of Timo
 
         // Tommin osaa
 

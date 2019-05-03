@@ -13,10 +13,10 @@
             <p>Toimipaikat</p>
         </a>
         <div class="navi_submenu" id="toimipaikat_submenu" style="display:none;">
-            <p>Listaa</p>
-            <p>Lisää</p>
-            <p>Muokkaa</p>
-            <p>Poista</p>
+            <a href="toimipisteet.php">Listaa</a>
+            <a href="toimipisteet.php?sivu=muokkaa&id=0">Lisää</a>
+            <a>Muokkaa</a>
+            <a>Poista</a>
         </div>
     </div>
         
@@ -25,10 +25,10 @@
             <p>Mökit</p>
         </a>
         <div class="navi_submenu" id="mokit_submenu" style="display:none;">
-            <p>Listaa</p>
-            <p>Lisää</p>
-            <p>Muokkaa</p>
-            <p>Poista</p>
+            <a href="?">Listaa</a>
+            <a href="toimipisteet.php?sivu=muokkaapalvelua&id=0">Lisää</a>
+            <a href="?">Muokkaa</a>
+            <a href="?">Poista</a>
         </div>
     </div>
         
@@ -58,20 +58,19 @@
             <p>Laskutus</p>
         </a>
         <div class="navi_submenu" id="laskutus_submenu" style="display:none;">
-            <p>Listaa</p>
-            <p>Lisää</p>
-            <p>Muokkaa</p>
-            <p>Poista</p>
+            <p><a href="?sivu=laskutusA">Listaa</a></p>
+            <p><a href="?sivu=muokkaalaskua&id=0">Lisää</a></p>
+                     
         </div>
     </div>
         
     <div class="navilink" onmouseover="avaaValikko('kayttajat_submenu')" onmouseout="suljeValikko('kayttajat_submenu')">
-        <a href="?">
-            <p>Käyttäjät</p>
+        <a href="?sivu=asiakaslistaus">
+            <p>Asiakkaat</p>
         </a>
         <div class="navi_submenu" id="kayttajat_submenu" style="display:none;">
-            <p>Listaa</p>
-            <p>Lisää</p>
+            <p><a href="?sivu=asiakaslistaus">Listaa</a></p>
+            <p><a href="?sivu=lisaaasiakas">Lisää</a></p>
             <p>Muokkaa</p>
             <p>Poista</p>
         </div>

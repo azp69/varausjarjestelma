@@ -1,16 +1,16 @@
 <?php 
+class Lasku {
 
-class Asiakas {
-
-    public function __construct($asiakas_id, $etunimi, $sukunimi, $lahiosoite, $postitoimipaikka, $postinro, $email, $puhelinnro) {
+    public function __construct($lasku_id, $asiakas_id, $varaus_id, $sukunimi, $lahiosoite, $postitoimipaikka, $postinro, $summa, $alv) {
+        $this->lasku_id = $lasku_id;
         $this->asiakas_id = $asiakas_id;
-        $this->etunimi = $etunimi;
+        $this->varaus_id = $varaus_id;
         $this->sukunimi = $sukunimi;
         $this->lahiosoite = $lahiosoite;
         $this->postitoimipaikka = $postitoimipaikka;
         $this->postinro = $postinro;
-        $this->email = $email;
-        $this->puhelinnro = $puhelinnro;
+        $this->summa = $summa;
+        $this->alv = $alv;
     }
 
     public function __deconstruct()
@@ -18,14 +18,18 @@ class Asiakas {
 
     }
 
+    function getLaskuId() {
+        return $this->lasku_id;
+    }
+
     function getAsiakasId() {
         return $this->asiakas_id;
     }
 
-    function getEtunimi() {
-        return $this->etunimi;
+    function getVarausId() {
+        return $this->varaus_id;
     }
-    
+        
     function getSukunimi() {
         return $this->sukunimi;
     }
@@ -41,19 +45,24 @@ class Asiakas {
     function getPostinro() {
         return $this->postinro;
     }
-    function getEmail() {
-        return $this->email;
+
+    function getSumma() {
+        return $this->summa;
     }
-    function getPuhelinnro() {
-        return $this->puhelinnro;
+    function getAlv() {
+        return $this->alv;
     }
 
+    function setLaskuId($lasku_id) {
+        $this->lasku_id = $lasku_id;
+    }
+    
     function setAsiakasId($asiakas_id) {
         $this->asiakas_id = $asiakas_id;
     }
 
-    function setEtunimi($etunimi) {
-        $this->etunimi = $etunimi;
+    function setVarausId($varaus_id) {
+        $this->varaus_id = $varaus_id;
     }
 
     function setSukunimi($sukunimi) {
@@ -71,13 +80,13 @@ class Asiakas {
     function setPostinro($postinro) {
         $this->postinro = $postinro;
     }
-    
-    function setEmail($email) {
-        $this->email = $email;
+        
+    function setSumma($summa) {
+        $this->summa = $summa;
     }
 
-    function setPuhelinnro($puhelinnro) {
-        $this->puhelinnro = $puhelinnro;
+    function setAlv($alv) {
+        $this->alv = $alv;
     }
 
 }

@@ -12,6 +12,8 @@
             ?>
         </title>
         <link rel="stylesheet" type="text/css" href="styles/style.css">
+        <link rel="stylesheet" type="text/css" href="styles/muokkaa_lisaa_tp.css">
+
         <script src="scripts/menuscript.js"></script>
     </head>
 
