@@ -1,0 +1,196 @@
+
+:root
+{
+--main-text-color: #666666;
+--main-primary-0: #FFFFFF;
+--main-primary-1: #C7DBC7;
+--main-primary-2: #F2F5F2;
+--main-primary-3: #8FB98F;
+--main-primary-4: #4F914F;
+}
+
+body
+{
+    font-family: arial;
+    background-color: var(--main-primary-0);
+    margin:0px;
+}
+
+a:link, a:visited
+{
+    text-decoration: none;
+    color: var(--main-primary-3);
+}
+
+
+.header
+{
+    background-color: var(--main-primary-2);
+}
+
+.banner
+{
+    background-image: url('../images/mokki.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    filter: blur(1px);
+    width:100%;
+    height: 200px;
+}
+
+.banner > p
+{
+    padding-top:1em;
+    margin-left:15%;
+    font-family:verdana;
+    font-size:4em;
+    color: var(--main-primary-2);
+}
+
+.navi /* navi container */
+{
+    margin-left: 0%;
+    margin-right: 0%;
+    text-align: center;
+    margin-bottom:0;
+    position:relative;
+}
+
+.navilink /* oletuslinkki navissa */
+{
+    position:relative;
+    display:inline-block;
+    color: var(--main-primary-3);
+    padding: 1em;
+    font-family: arial;
+    font-size: 1em;
+    text-align: center;
+    background-color: var(--main-primary-2);
+    width:6em;
+}
+
+.navilink_selected /* valittu linkki navissa */
+{
+    position:relative;
+    display:inline-block;
+    color: var(--main-primary-1);
+    padding: 1em;
+    font-family: arial;
+    font-size: 1em;
+    text-align: center;
+    background-color: var(--main-primary-1);
+    width:6em;
+}
+
+.navilink_selected:hover /* hover navissa */
+{
+    background-color: var(--main-primary-4);
+    color:var(--main-primary-0);
+    
+}
+
+.navilink:hover /* hover navissa */
+{
+    background-color: var(--main-primary-4);
+    color:var(--main-primary-0);
+    
+}
+
+.main_container
+{
+    margin-top:0;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: var(--main-primary-0);
+}
+
+.loginscreen
+{
+    display:inline-block;
+    font-family:arial;
+    text-align:center;
+    width:100%;
+    color: var(--main-text-color);
+}
+
+.textinput
+{
+    background-color: var(--main-primary-0);
+    font-family: arial;
+    font-size: 0.8em;
+    border: 2px solid var(--main-primary-3);
+    border-radius: 8px;
+    margin: 0.5em;
+    padding:0.5em;
+    width: 15em;
+    margin-bottom: 1.5em;
+}
+
+.textinput:hover
+{
+    background-color: var(--main-primary-1);
+}
+
+.button_default
+{
+    background-color: var(--main-primary-2);
+    font-family: arial;
+    font-size: 0.8em;
+    border: 2px solid var(--main-primary-3);
+    border-radius: 8px;
+    margin: 0.5em;
+    padding:0.5em;
+    font-weight: bold;
+    width: 15em;
+}
+
+.button_default:hover
+{
+    background-color: var(--main-primary-1);
+}
+
+.erotin
+{
+    border: 1px solid var(--main-primary-3);;
+}
+
+.navi_submenu
+{
+    position:absolute;
+    display:block;
+    color: var(--main-primary-3);
+    padding: 1em;
+    font-family: arial;
+    font-size: 1em;
+    text-align: center;
+    background-color: var(--main-primary-4);
+    left:0;
+    width:100%;
+    margin:0;
+    padding:0;
+    border: none;
+    border-radius: 0 0 10px 10px;
+    opacity:0.95;
+}
+
+.navi_submenu > p, .navi_submenu > a
+{
+    display: block;
+    color:var(--main-primary-1);
+    background-color: var(--main-primary-4);
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.navi_submenu > p:hover, .navi_submenu > a:hover
+{
+    background-color: var(--main-primary-3);
+    -webkit-transition: background-color 80ms linear;
+    -moz-transition: background-color 80ms linear;
+    -o-transition: background-color 80ms linear;
+    -ms-transition: background-color 80ms linear;
+    transition: background-color 80ms linear;
+}
