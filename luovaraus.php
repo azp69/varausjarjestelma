@@ -49,17 +49,10 @@ Etsi asiakasta nimellä: <br />
 <div id="majoituscontainer">
 </div>
 
-<script src="scripts/kalenteri.js"></script>
-<script>
-const varaus = {
-                alkupaiva: '',
-                loppupaiva: ''
-            }
 
-            var varaukset = [];
-            var v;
-</script>
 <script id="scriptcontainer"></script>
+
+<script src="scripts/kalenteri.js"></script>
 
 <?php include('kalenteri.php'); ?>
 <hr class="erotin"/>

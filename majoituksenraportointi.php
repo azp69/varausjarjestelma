@@ -1,8 +1,9 @@
 <?php
     include_once("modules/tietokanta.php");
+    include_once("modules/toimipiste.php");
     
     $tk = new Tietokanta;
-    
+
     session_start();
 
     if (isset($_POST['SubmitButton']) && $_POST["alkupvm"] && $_POST["loppupvm"] && $_POST["alkupvm"] < $_POST["loppupvm"] && $_POST["toimipisteid"] != "") {

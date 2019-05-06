@@ -3,26 +3,26 @@
     Alkaen
     <?php if ($_GET['sivu'] == 'luovaraus')
     { ?>
-    <input type="text" class="textinput" id="alkupvm" name="alkupvm" readonly onFocus="luoKalenteri('alkupvm', 0, true); return false;" value="Valitse aloituspvm" />
+    <input type="text" class="textinput" id="alkupvm" name="alkupvm" readonly onFocus="luoKalenteri('alkupvm', 0, true);" value="Valitse aloituspvm" />
     <?php 
     }
     else
     {
     ?>
-    <input type="text" class="textinput" id="alkupvm" name="alkupvm" readonly onFocus="luoKalenteri('alkupvm', 0, false); return false;" value="Valitse aloituspvm" />
+    <input type="text" class="textinput" id="alkupvm" name="alkupvm" readonly onFocus="luoKalenteri('alkupvm', 0, false);" value="Valitse aloituspvm" />
     <?php
     }
     ?>
     Päättyen
     <?php if ($_GET['sivu'] == 'luovaraus')
     { ?>
-    <input type="text" class="textinput" id="loppupvm" name="loppupvm" readonly onFocus="luoKalenteri('loppupvm', 0, true); return false;" value="Valitse aloituspvm" />
+    <input type="text" class="textinput" id="loppupvm" name="loppupvm" readonly onFocus="luoKalenteri('loppupvm', 0, true);" value="Valitse aloituspvm" />
     <?php 
     }
     else
     {
     ?>
-    <input type="text" class="textinput" id="loppupvm" name="loppupvm" readonly onFocus="luoKalenteri('loppupvm', 0, false); return false;" value="Valitse päättymispvm" />
+    <input type="text" class="textinput" id="loppupvm" name="loppupvm" readonly onFocus="luoKalenteri('loppupvm', 0, false);" value="Valitse päättymispvm" />
     <?php
     }
     ?>

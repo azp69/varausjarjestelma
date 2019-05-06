@@ -1,5 +1,6 @@
 function luoKalenteri(inputti, kkOffset, onkoVaraus) // inputti = aloitus / lopetuspvm, kkOffset = kuukauden offset vrt. nyt
 {
+    console.log("täällä");
     if (inputti==null)
         inputti = "alkupvm";
     
@@ -118,18 +119,26 @@ function valitsePaiva(inp, el, onkoVarausKalenteri)
 
     if (onkoVarausKalenteri){
 
-        var omavarausalku = new Date(omavaraus.alkupaiva + " 00:00");
-        var omavarausloppu = new Date(omavaraus.loppupaiva + " 00:00");
+        var omavarausalku = null;
+        var omavarausloppu = null;
+
+        if (typeof omavaraus !== 'undefined')
+        {
+            omavarausalku = new Date(omavaraus.alkupaiva + " 00:00");
+            omavarausloppu = new Date(omavaraus.loppupaiva + " 00:00");
+        }
 
         for (var i = 0; i < varaukset.length; i++)
         {
             
             var varattuAlkupaiva = new Date(varaukset[i].alkupaiva);
             var varattuLoppupaiva = new Date(varaukset[i].loppupaiva);
-    
-            if (+varattuAlkupaiva == +omavarausalku && +varattuLoppupaiva == +omavarausloppu)
-                continue;
-    
+            
+            if (typeof omavaraus !== 'undefined')
+            {
+                if (+varattuAlkupaiva == +omavarausalku && +varattuLoppupaiva == +omavarausloppu)
+                    continue;
+            }
                 if (alkupaiva <= varattuAlkupaiva && loppupaiva >= varattuLoppupaiva)
                 {
                     console.log("Konflikti edellisen varauksen kanssa.");
@@ -155,7 +164,7 @@ function valitsePaiva(inp, el, onkoVarausKalenteri)
 
     if (!konflikti)
     {
-        luoKalenteri(inp, 0);
+        luoKalenteri(inp, 0, onkoVarausKalenteri);
         if (inp=="alkupvm")
             document.getElementById("loppupvm").focus();
         else
