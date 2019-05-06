@@ -1,11 +1,9 @@
 <?php
     include_once('modules/tietokanta.php');
-
     if (isset($_POST['asiakasid']))
     {
         $lisapalvelut = array();
         $lisapalveluidenlkm = array();
-
         foreach ($_POST['lisapalveluid'] as $palveluid)
         {
             array_push($lisapalvelut, $palveluid);
@@ -72,7 +70,6 @@ Etsi asiakasta nimellä: <br />
         include_once("modules/toimipiste.php");
         $tk = new Tietokanta;
         $toimipisteet = array();
-
         $toimipisteet = $tk->HaeToimipisteet();
     
         foreach ($toimipisteet as $tp)

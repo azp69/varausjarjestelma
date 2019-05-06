@@ -1,4 +1,4 @@
-function luoKalenteri(inputti, kkOffset, onkoVaraus, varaukset) // inputti = aloitus / lopetuspvm, kkOffset = kuukauden offset vrt. nyt
+function luoKalenteri(inputti, kkOffset, onkoVaraus) // inputti = aloitus / lopetuspvm, kkOffset = kuukauden offset vrt. nyt
 {
     if (inputti==null)
         inputti = "alkupvm";
