@@ -70,9 +70,9 @@
 <div class="kalenteri_container" id="kal">
     <h2>Muuta varauksen ajankohtaa</h2>
     Alkaen
-    <input type="text" class="textinput" id="alkupvm" name="alkupvm" readonly onFocus="luoKalenteri('alkupvm', 0); return false;" value="<?php echo $alku[0]; ?>" />
+    <input type="text" class="textinput" id="alkupvm" name="alkupvm" readonly onFocus="javascript:luoKalenteri('alkupvm', 0, true);" value="<?php echo $alku[0]; ?>" />
     Päättyen
-    <input type="text" class="textinput" id="loppupvm" name="loppupvm" readonly onFocus="luoKalenteri('loppupvm', 0); return false;" value="<?php echo $loppu[0]; ?>" />
+    <input type="text" class="textinput" id="loppupvm" name="loppupvm" readonly onFocus="javascript:luoKalenteri('loppupvm', 0, true);" value="<?php echo $loppu[0]; ?>" />
     <div id="kalenteri" class="kalenteri">
     </div>
 </div>
@@ -104,7 +104,7 @@ const varaus = {
         echo "v.loppupaiva = '" . $v["varauksen_lopetuspvm"] . ";'\n";
         echo "varaukset.push(v);\n";
     }
-    echo "luoKalenteri(null, 0);\n";
+    echo "luoKalenteri(null, 0, true);\n";
     echo "haeVarauksenLisapalvelut(" . $varaus->getToimipisteID() . "," . $varaus->getVarausId() .");";
 ?>
 

@@ -18,6 +18,6 @@
             echo "varaukset.push(v);\n";
             
         }
-        echo "luoKalenteri(null, 0);\n";
+        echo "luoKalenteri(null, 0, true);\n";
     }
 ?>

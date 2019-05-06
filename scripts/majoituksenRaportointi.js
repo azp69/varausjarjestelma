@@ -11,7 +11,7 @@ function initMokkikohtainen(datas, apvm, lpvm) {
     var dataPoints = [];
 
     if (datas == null) {
-        document.getElementById("chartContainer").innerHTML = "<p>Valitulla aikavälillä ei näytettävää</p>";
+        document.getElementById("chartContainer").innerHTML = "<div style='text-align: center;'><p>Valitulla aikavälillä ei näytettävää</p></div>";
     } else {
 
         CanvasJS.addColorSet("green",
@@ -185,16 +185,28 @@ function createDataArray(startDate, endDate, dataArray, varattavissaOlevienMokki
         for (var n = 0; n < dataArray.length; n++) {
             var sdt = new Date(dataArray[n].aloituspvm);
             var edt = new Date(dataArray[n].lopetuspvm);
-            if (dateArray[i] >= sdt && dateArray[i] <= edt) {
-                vuokrapaivat++;
+            try {
+                if (dateArray[i].getTime() >= sdt.getTime() && dateArray[i].getTime() <= edt.getTime()) {
+                    if (n > 0) {
+                        var x = new Date(dataArray[n - 1].lopetuspvm);
+                    }
+                    vuokrapaivat++;
+                    if (x.getTime() === dateArray[i].getTime()){
+                        vuokrapaivat--;
+                        console.log(sdt);
+                    }
+                }
+            } catch(exception) {
+                console.log(exception);
             }
+            
         }
         var tayttoaste = 0;
         if (varattavatPaivatYhteensa != 0) {
             tayttoaste = (vuokrapaivat / varattavatPaivatYhteensa) * 100;
-            if (tayttoaste > 100){
+            /*if (tayttoaste > 100){
                 tayttoaste = 100;
-            }
+            } */
         }
         
         data.push({

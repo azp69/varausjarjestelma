@@ -1,4 +1,4 @@
-function luoKalenteri(inputti, kkOffset) // inputti = aloitus / lopetuspvm, kkOffset = kuukauden offset vrt. nyt
+function luoKalenteri(inputti, kkOffset, onkoVaraus) // inputti = aloitus / lopetuspvm, kkOffset = kuukauden offset vrt. nyt
 {
     if (inputti==null)
         inputti = "alkupvm";
@@ -21,10 +21,10 @@ function luoKalenteri(inputti, kkOffset) // inputti = aloitus / lopetuspvm, kkOf
     var kkEkaPaiva = new Date(date.getFullYear(), date.getMonth() + kuukaudenOffset, 1);
     var kkVikaPaiva = new Date(date.getFullYear(), date.getMonth() + kuukaudenOffset + 1, 0);
 
-    kalenteriContainer.innerHTML = "<a href='javascript:luoKalenteri(\"" + inputti + "\", " + (kuukaudenOffset - 1) +")'> << </a>";
+    kalenteriContainer.innerHTML = "<a href='javascript:luoKalenteri(\"" + inputti + "\", " + (kuukaudenOffset - 1) +", " + onkoVaraus + ")'> << </a>";
     kalenteriContainer.innerHTML += kuukaudet[kkEkaPaiva.getMonth()];
     kalenteriContainer.innerHTML += " " + kkEkaPaiva.getFullYear();
-    kalenteriContainer.innerHTML += "<a href='javascript:luoKalenteri(\"" + inputti + "\", " + (kuukaudenOffset + 1) +")'> >> </a>";
+    kalenteriContainer.innerHTML += "<a href='javascript:luoKalenteri(\"" + inputti + "\", " + (kuukaudenOffset + 1) +", " + onkoVaraus + ")'> >> </a>";
         
     var taulukko = document.createElement("table");
     var taulukonRivi = document.createElement("tr");
@@ -61,27 +61,30 @@ function luoKalenteri(inputti, kkOffset) // inputti = aloitus / lopetuspvm, kkOf
         if (juoksevaPaiva >= kkEkaViikonpaiva -1)
         {
             linkki.setAttribute('href', '#kal');
-            taulukonSarake.onclick = function() { valitsePaiva(inputti, this) };
+            taulukonSarake.onclick = function() { valitsePaiva(inputti, this, onkoVaraus) };
             
             var paivaString = muodostaPaivamaara(kkEkaPaiva, kkPaiva);
             var paivamaara = new Date(paivaString + " 00:00");
 
             taulukonSarake.setAttribute('id', paivaString);
             
-            for (var i = 0; i < varaukset.length; i++)
+            if (onkoVaraus === true)
             {
-                var alkupaiva = new Date(varaukset[i].alkupaiva + " 00:00");
-                var loppupaiva = new Date(varaukset[i].loppupaiva + " 00:00");
-
-                if ((paivamaara >= alkupaiva) && (paivamaara <= (loppupaiva - 1)))
+                for (var i = 0; i < varaukset.length; i++)
                 {
-                    taulukonSarake.setAttribute("style", "background-color: #F00");
+                    var alkupaiva = new Date(varaukset[i].alkupaiva + " 00:00");
+                    var loppupaiva = new Date(varaukset[i].loppupaiva + " 00:00");
+    
+                    if ((paivamaara >= alkupaiva) && (paivamaara <= (loppupaiva - 1)))
+                    {
+                        taulukonSarake.setAttribute("style", "background-color: #F00");
+                    }
                 }
-            }
-
-            if (varauksenAlkupaiva <= paivamaara && (varauksenLoppupaiva) >= paivamaara)
-                taulukonSarake.setAttribute("style", "background-color: #0F0");
-                        
+    
+                if (varauksenAlkupaiva <= paivamaara && (varauksenLoppupaiva) >= paivamaara)
+                    taulukonSarake.setAttribute("style", "background-color: #0F0");
+                }
+            
             linkki.textContent = kkPaiva++;
             taulukonSarake.appendChild(linkki);
         }
@@ -103,45 +106,52 @@ function luoKalenteri(inputti, kkOffset) // inputti = aloitus / lopetuspvm, kkOf
    
 }
 
-function valitsePaiva(inp, el)
+function valitsePaiva(inp, el, onkoVarausKalenteri)
 {
     var inputti = document.getElementById(inp);
     inputti.value = el.id;
         
     var alkupaiva = new Date(document.getElementById("alkupvm").value + " 00:00");
     var loppupaiva = new Date(document.getElementById("loppupvm").value + " 00:00");
-
-    var omavarausalku = new Date(omavaraus.alkupaiva + " 00:00");
-    var omavarausloppu = new Date(omavaraus.loppupaiva + " 00:00");
-                
+     
     var konflikti = false;
 
-    for (var i = 0; i < varaukset.length; i++)
-    {
-        var varattuAlkupaiva = new Date(varaukset[i].alkupaiva);
-        var varattuLoppupaiva = new Date(varaukset[i].loppupaiva);
+    if (onkoVarausKalenteri){
 
-        if (+varattuAlkupaiva == +omavarausalku && +varattuLoppupaiva == +omavarausloppu)
-            continue;
+        var omavarausalku = new Date(omavaraus.alkupaiva + " 00:00");
+        var omavarausloppu = new Date(omavaraus.loppupaiva + " 00:00");
 
-            if (alkupaiva <= varattuAlkupaiva && loppupaiva >= varattuLoppupaiva)
-            {
-                console.log("Konflikti edellisen varauksen kanssa.");
-                konflikti = true;
-            }
-            if (loppupaiva > varattuAlkupaiva && loppupaiva <= varattuLoppupaiva)
-            {
-                konflikti = true;
-            }
-            if (alkupaiva < varattuLoppupaiva && loppupaiva > varattuLoppupaiva)
-            {
-                konflikti = true;
-            }
-            if (alkupaiva > loppupaiva)
-                konflikti = true;
-
-       
+        for (var i = 0; i < varaukset.length; i++)
+        {
+            
+            var varattuAlkupaiva = new Date(varaukset[i].alkupaiva);
+            var varattuLoppupaiva = new Date(varaukset[i].loppupaiva);
+    
+            if (+varattuAlkupaiva == +omavarausalku && +varattuLoppupaiva == +omavarausloppu)
+                continue;
+    
+                if (alkupaiva <= varattuAlkupaiva && loppupaiva >= varattuLoppupaiva)
+                {
+                    console.log("Konflikti edellisen varauksen kanssa.");
+                    konflikti = true;
+                }
+                if (loppupaiva > varattuAlkupaiva && loppupaiva <= varattuLoppupaiva)
+                {
+                    konflikti = true;
+                }
+                if (alkupaiva < varattuLoppupaiva && loppupaiva > varattuLoppupaiva)
+                {
+                    konflikti = true;
+                }
+                if (alkupaiva > loppupaiva)
+                    konflikti = true;
+    
+           
+        }
+    } else if (alkupaiva > loppupaiva) {
+        konflikti = true;
     }
+    
 
     if (!konflikti)
     {
