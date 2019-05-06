@@ -9,6 +9,7 @@
         $varauskalenteri = $tk->HaePalvelunVarauskalenteri($_GET['q']);
         
         ?>
+        
         const varaus = {
                 alkupaiva: '',
                 loppupaiva: ''
@@ -26,5 +27,6 @@
         }
         
         echo "luoKalenteri(null, 0, true);\n";
+        
     }
 ?>
