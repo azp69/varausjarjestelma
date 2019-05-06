@@ -104,7 +104,7 @@ const varaus = {
         echo "v.loppupaiva = '" . $v["varauksen_lopetuspvm"] . ";'\n";
         echo "varaukset.push(v);\n";
     }
-    echo "luoKalenteri(null, 0, true);\n";
+    echo "luoKalenteri(null, 0, true, varaukset);\n";
     echo "haeVarauksenLisapalvelut(" . $varaus->getToimipisteID() . "," . $varaus->getVarausId() .");";
 ?>
 
