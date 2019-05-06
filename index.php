@@ -1,6 +1,11 @@
 <?php
     session_start();
     include_once('modules/perustiedot.php');
+    include_once("modules/toimipiste.php");
+    include_once("modules/palvelu.php");
+    include_once("modules/tietokanta.php");
+    include_once("modules/majoituksenraporttiluokka.php");
+    
 ?>
 
 <html>

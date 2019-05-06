@@ -8,73 +8,113 @@
 ?>
 
 <div id="navi" class="navi">
+    <?php if ($_GET['sivu'] == "toimipisteet" || $_GET['sivu'] == "muokkaa")
+    {
+        ?>
     <div class="navilink_selected" onmouseover="avaaValikko('toimipaikat_submenu')" onmouseout="suljeValikko('toimipaikat_submenu')">
-        <a href="?">
-            <p>Toimipaikat</p>
+    <?php    
+    }
+    else
+    {
+        ?>
+        <div class="navilink" onmouseover="avaaValikko('toimipaikat_submenu')" onmouseout="suljeValikko('toimipaikat_submenu')">
+        <?php
+    }
+    ?>
+        <a href="?sivu=toimipisteet">
+            <p>Toimipisteet</p>
         </a>
         <div class="navi_submenu" id="toimipaikat_submenu" style="display:none;">
-            <a href="toimipisteet.php">Listaa</a>
-            <a href="toimipisteet.php?sivu=muokkaa&id=0">Lisää</a>
-            <a>Muokkaa</a>
-            <a>Poista</a>
+            <p><a href="?sivu=muokkaa&id=0">Lisää</p></a>
         </div>
     </div>
-        
-    <div class="navilink" onmouseover="avaaValikko('mokit_submenu')" onmouseout="suljeValikko('mokit_submenu')">
-        <a href="?">
-            <p>Mökit</p>
-        </a>
-        <div class="navi_submenu" id="mokit_submenu" style="display:none;">
-            <a href="?">Listaa</a>
-            <a href="toimipisteet.php?sivu=muokkaapalvelua&id=0">Lisää</a>
-            <a href="?">Muokkaa</a>
-            <a href="?">Poista</a>
-        </div>
-    </div>
-        
-    <div class="navilink" onmouseover="avaaValikko('palvelut_submenu')" onmouseout="suljeValikko('palvelut_submenu')">
-        <a href="?">
-            <p>Palvelut</p>
-        </a>
-        <div class="navi_submenu" id="palvelut_submenu" style="display:none;">
-            <p>Jotain</p>
-            <p>Shittiä</p>
-        </div>
-    </div>
-
+    
+    <?php if ($_GET['sivu'] == "varaukset" || $_GET['sivu'] == "luovaraus")
+    {
+        ?>
+    <div class="navilink_selected" onmouseover="avaaValikko('varaukset_submenu')" onmouseout="suljeValikko('varaukset_submenu')">
+    <?php    
+    }
+    else
+    {
+    ?>
     <div class="navilink" onmouseover="avaaValikko('varaukset_submenu')" onmouseout="suljeValikko('varaukset_submenu')">
+    <?php
+    }
+    ?>
         <a href="?sivu=varaukset">
             <p>Varaukset</p>
         </a>
         <div class="navi_submenu" id="varaukset_submenu" style="display:none;">
-            <a href="?sivu=luovaraus">
-                <p>Uusi varaus</p>
-            </a>
+            <p><a href="?sivu=luovaraus">Uusi varaus</p></a>
         </div>
     </div>
 
+
+    <?php if ($_GET['sivu'] == "laskutusA" || $_GET['sivu'] == "muokkaalaskua")
+    {
+        ?>
+    <div class="navilink_selected" onmouseover="avaaValikko('laskutus_submenu')" onmouseout="suljeValikko('laskutus_submenu')">
+    <?php    
+    }
+    else
+    {
+    ?>
     <div class="navilink" onmouseover="avaaValikko('laskutus_submenu')" onmouseout="suljeValikko('laskutus_submenu')">
-        <a href="?">
+    <?php
+    }
+    ?>
+        <a href="?sivu=laskutusA">
             <p>Laskutus</p>
         </a>
         <div class="navi_submenu" id="laskutus_submenu" style="display:none;">
-            <p><a href="?sivu=laskutusA">Listaa</a></p>
             <p><a href="?sivu=muokkaalaskua&id=0">Lisää</a></p>
                      
         </div>
     </div>
         
+    <?php if ($_GET['sivu'] == "asiakaslistaus" || $_GET['sivu'] == "lisaaasiakas")
+    {
+        ?>
+    <div class="navilink_selected" onmouseover="avaaValikko('kayttajat_submenu')" onmouseout="suljeValikko('kayttajat_submenu')">
+    <?php    
+    }
+    else
+    {
+    ?>
     <div class="navilink" onmouseover="avaaValikko('kayttajat_submenu')" onmouseout="suljeValikko('kayttajat_submenu')">
+    <?php
+    }
+    ?>
         <a href="?sivu=asiakaslistaus">
             <p>Asiakkaat</p>
         </a>
         <div class="navi_submenu" id="kayttajat_submenu" style="display:none;">
-            <p><a href="?sivu=asiakaslistaus">Listaa</a></p>
             <p><a href="?sivu=lisaaasiakas">Lisää</a></p>
-            <p>Muokkaa</p>
-            <p>Poista</p>
         </div>
     </div>
+
+    <?php if ($_GET['sivu'] == "majoituksenraportointi")
+    {
+        ?>
+    <div class="navilink_selected" onmouseover="avaaValikko('majoituksenraportointi_submenu')" onmouseout="suljeValikko('majoituksenraportointi_submenu')">
+    <?php    
+    }
+    else
+    {
+    ?>
+    <div class="navilink" onmouseover="avaaValikko('majoituksenraportointi_submenu')" onmouseout="suljeValikko('majoituksenraportointi_submenu')">
+    <?php
+    }
+    ?>
+        <a href="?sivu=majoituksenraportointi">
+            <p>Raportointi</p>
+        </a>
+        <div class="navi_submenu" id="majoituksenraportointi_submenu" style="display:none;">
+            <p><a href="?sivu=majoituksenraportointi">Majoitus</a></p>
+        </div>
+    </div>
+
 
     <?php
     }

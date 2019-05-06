@@ -87,6 +87,12 @@ const varaus = {
 
             var varaukset = [];
             var v;
+            var omavaraus = Object.create(varaus);
+    <?php
+            echo "omavaraus.alkupaiva = '$alku[0]';\n";
+            echo "omavaraus.loppupaiva = '$loppu[0]';\n";
+            echo "\n";
+    ?>
 
     <?php
     $varauskalenteri = $tk->HaePalvelunVarauskalenteri($majoitusid);

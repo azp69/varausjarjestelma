@@ -119,9 +119,6 @@
     padding: 10px;
     text-align: center;
     max-width: 750px;
-
-
-    width: 70%;
     margin-left: auto;
     margin-right: auto;
 
@@ -135,6 +132,41 @@
 
 .form-container > h1, .form-container > p, .form-container > a {
     text-align: center;
+}
+
+
+.nappi-container {
+    display: inline;
+}
+
+.nappi-container > .linkki > input[type=submit] {
+    background:none;
+    border:0;
+    font-family: Arial;
+    font-size: 1em;
+    color: #8FB98F;
+}
+
+input[type=submit]:hover {
+    cursor: pointer;
+}
+
+
+.form-container > h1, .form-container > p, .form-container > a {
+    text-align: center;
+}
+
+.nappi-container > .linkki {
+    margin-left: auto;
+    margin-right: auto;
+    width: 175px;
+    height: 15px;
+    margin-top: 1.5em;
+    background-color: var(--main-primary-0);
+    border: 2px solid var(--main-primary-3);
+    border-radius: 8px;
+    padding:0.5em;
+    display: inline-block;
 }
 
 /* tiedot.php:n muotoilua */
@@ -153,29 +185,64 @@
 }
 
 #muuttiedot {
-    max-width: 750px;
-    width: 70%;
+    max-width: 525px;
+    min-width: 440px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0.5em;
+    display:inline-grid; 
+    grid-template-columns: 50% 50%; 
+    grid-template-rows: 100%;
 }
 
 #muuttiedot .tiedot-container {
     width: 98%;
+    min-width: 5px;
 }
 
 .container {
     text-align: center;
 }
 
+
+.hakutulos > a {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.hakutulos {
+    border: 2px solid #8FB98F;
+    border-radius: 8px;
+    margin: 0.5em;
+    padding:0.5em;
+    margin-bottom: 1.5em;
+    width: 70%;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 #mokit {
     float: left;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+#palvelut {
+    float: right;
+    padding-right: 0;
+    margin-right: 0;
 }
 
 /* muokkaapalvelua.php:n muotoilua */
 
 .form-container {
     text-align: center;
+    max-width: 620px;
 }
 
 .grid-container-palvelut {
@@ -191,9 +258,6 @@
     padding: 10px;
     text-align: center;
     max-width: 750px;
-
-
-    width: 70%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -213,5 +277,11 @@ select {
     border-radius: 8px;
     margin: 0.5em;
     padding:0.5em;
+    margin-bottom: 1.5em;
+}
+
+#nappi-container-muokkaatoimipisteentietoja, #nappi-container-lisaapalvelu {
+    display: block;
+    margin-bottom: 1em;
     margin-bottom: 1.5em;
 }

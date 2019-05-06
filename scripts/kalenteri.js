@@ -110,6 +110,9 @@ function valitsePaiva(inp, el)
         
     var alkupaiva = new Date(document.getElementById("alkupvm").value + " 00:00");
     var loppupaiva = new Date(document.getElementById("loppupvm").value + " 00:00");
+
+    var omavarausalku = new Date(omavaraus.alkupaiva + " 00:00");
+    var omavarausloppu = new Date(omavaraus.loppupaiva + " 00:00");
                 
     var konflikti = false;
 
@@ -117,24 +120,27 @@ function valitsePaiva(inp, el)
     {
         var varattuAlkupaiva = new Date(varaukset[i].alkupaiva);
         var varattuLoppupaiva = new Date(varaukset[i].loppupaiva);
-    
-        
-        if (alkupaiva <= varattuAlkupaiva && loppupaiva >= varattuLoppupaiva)
-        {
-            console.log("Konflikti edellisen varauksen kanssa.");
-            konflikti = true;
-        }
-        if (loppupaiva > varattuAlkupaiva && loppupaiva <= varattuLoppupaiva)
-        {
-            konflikti = true;
-        }
-        if (alkupaiva < varattuLoppupaiva && loppupaiva > varattuLoppupaiva)
-        {
-            konflikti = true;
-        }
-        if (alkupaiva > loppupaiva)
-            konflikti = true;
 
+        if (+varattuAlkupaiva == +omavarausalku && +varattuLoppupaiva == +omavarausloppu)
+            continue;
+
+            if (alkupaiva <= varattuAlkupaiva && loppupaiva >= varattuLoppupaiva)
+            {
+                console.log("Konflikti edellisen varauksen kanssa.");
+                konflikti = true;
+            }
+            if (loppupaiva > varattuAlkupaiva && loppupaiva <= varattuLoppupaiva)
+            {
+                konflikti = true;
+            }
+            if (alkupaiva < varattuLoppupaiva && loppupaiva > varattuLoppupaiva)
+            {
+                konflikti = true;
+            }
+            if (alkupaiva > loppupaiva)
+                konflikti = true;
+
+       
     }
 
     if (!konflikti)

@@ -25,7 +25,7 @@
 
 <h2>Luo uusi varaus</h2>
 
-<h2>Valitse asiakas</h2>
+<h3>Valitse asiakas</h3>
 Etsi asiakasta nimellä: <br />
 <div id="asiakascontainer">
 </div>
@@ -33,7 +33,7 @@ Etsi asiakasta nimellä: <br />
 
 <hr class="erotin" />
 
-<h2>Valitse toimipiste</h2>
+<h3>Valitse toimipiste</h3>
 
 <select class="dropdownmenu" name="toimipisteid" id="toimipiste" onclick="haePalvelut(); haeLisapalvelut();">
 
@@ -44,7 +44,7 @@ Etsi asiakasta nimellä: <br />
 </select>
 <hr class="erotin"/>
 
-<h2>Valitse majoitus</h2>
+<h3>Valitse majoitus</h3>
 
 <div id="majoituscontainer">
 </div>
@@ -64,7 +64,7 @@ const varaus = {
 <?php include('kalenteri.php'); ?>
 <hr class="erotin"/>
 
-<h2>Valitse lisäpalvelut</h2>
+<h3>Valitse lisäpalvelut</h3>
 <div id="lisapalvelucontainer"></div>
 <hr class="erotin"/>
 

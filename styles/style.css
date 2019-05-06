@@ -11,6 +11,7 @@
 
 body
 {
+    font-family: arial;
     background-color: var(--main-primary-0);
     margin:0px;
 }
@@ -122,6 +123,20 @@ a:link, a:visited
     color: var(--main-text-color);
 }
 
+.main_container > form > h1
+{
+    font-family:arial;
+    font-size:3em;
+    color: var(--main-text-color);
+}
+
+.main_container > form > h2
+{
+    font-family:arial;
+    font-size:2em;
+    color: var(--main-text-color);
+}
+
 .loginscreen
 {
     font-family:arial;
@@ -175,7 +190,7 @@ a:link, a:visited
 {
     position:absolute;
     display:block;
-    color: var(--main-primary-3);
+    color: var(--main-primary-2);
     padding: 1em;
     font-family: arial;
     font-size: 1em;
@@ -190,15 +205,20 @@ a:link, a:visited
     opacity:0.95;
 }
 
-.navi_submenu > p
+.navi_submenu > p > a
 {
-    color:var(--main-primary-1);
+    display: block;
     background-color: var(--main-primary-4);
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
-.navi_submenu > p:hover
+.navi_submenu > p > a:hover
 {
     background-color: var(--main-primary-3);
+    color:var(--main-primary-4);
     -webkit-transition: background-color 80ms linear;
     -moz-transition: background-color 80ms linear;
     -o-transition: background-color 80ms linear;
