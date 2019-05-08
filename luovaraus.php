@@ -18,31 +18,6 @@
 ?>
 <script src="scripts/varaus.js"></script>
 
-<script>
-    var edellinenValinta = null;
-
-    function ValitsePaivaKalenterista(paivamaara)
-    {
-        var alkupaiva = document.getElementById('alkupvm');
-        var loppupaiva = document.getElementById('loppupvm');
-
-        if (edellinenValinta == null || edellinenValinta == 'loppupaiva')
-            {
-                alkupaiva.value = paivamaara;
-                edellinenValinta = 'alkupaiva';
-            }
-        else
-            {
-                edellinenValinta = 'loppupaiva';
-                loppupaiva.value = paivamaara;
-            }
-        
-
-        var valittupaiva = document.getElementById(paivamaara);
-        //valittupaiva.setAttribute("style", "background-color: #0F0");
-    }
-</script>
-
 <form name="tee_varaus" method="post" action="?sivu=luovaraus">
 
 

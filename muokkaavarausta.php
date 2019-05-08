@@ -70,41 +70,23 @@
 <div class="kalenteri_container" id="kal">
     <h2>Muuta varauksen ajankohtaa</h2>
     Alkaen
-    <input type="text" class="textinput" id="alkupvm" name="alkupvm" readonly onFocus="javascript:luoKalenteri('alkupvm', 0, true);" value="<?php echo $alku[0]; ?>" />
+    <input type="text" class="textinput" id="alkupvm" name="alkupvm" readonly value="<?php echo $alku[0]; ?>" />
     Päättyen
-    <input type="text" class="textinput" id="loppupvm" name="loppupvm" readonly onFocus="javascript:luoKalenteri('loppupvm', 0, true);" value="<?php echo $loppu[0]; ?>" />
+    <input type="text" class="textinput" id="loppupvm" name="loppupvm" readonly value="<?php echo $loppu[0]; ?>" />
     <div id="kalenteri" class="kalenteri">
     </div>
 </div>
 
-<script src="scripts/kalenteri.js"></script>
-
 <script>
-const varaus = {
-                alkupaiva: '',
-                loppupaiva: ''
-            }
 
-            var varaukset = [];
-            var v;
-            var omavaraus = Object.create(varaus);
-    <?php
-            echo "omavaraus.alkupaiva = '$alku[0]';\n";
-            echo "omavaraus.loppupaiva = '$loppu[0]';\n";
-            echo "\n";
-    ?>
-
-    <?php
+<?php
     $varauskalenteri = $tk->HaePalvelunVarauskalenteri($majoitusid);
-       
-    foreach ($varauskalenteri as $v)
-    {
-        echo "v = Object.create(varaus);\n";
-        echo "v.alkupaiva = '" . $v["varauksen_aloituspvm"] . ";'\n";
-        echo "v.loppupaiva = '" . $v["varauksen_lopetuspvm"] . ";'\n";
-        echo "varaukset.push(v);\n";
-    }
-    echo "luoKalenteri(null, 0, true, varaukset);\n";
+    $aika = explode("-", $alku[0]);
+    $kuukausi = $aika[1];
+    $vuosi = $aika[0];
+
+    echo "haeMajoituksenKalenteriKuukausiJaVuosi($majoitusid, $kuukausi, $vuosi, '$alku[0]', '$loppu[0]');\n";
+    
     echo "haeVarauksenLisapalvelut(" . $varaus->getToimipisteID() . "," . $varaus->getVarausId() .");";
 ?>
 

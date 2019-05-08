@@ -23,16 +23,24 @@
         ?>
     
         <?php
-        if ($_GET['v'] && $_GET['k'])
+        
+        if ($_GET['v'] && $_GET['k'] && $_GET['omavarausA'] && $_GET['omavarausL'])
         {
-            echo build_calendar($_GET['k'], $_GET['v'], 0, $varauskalenteri);
+            $omatVaraukset = [];
+            $omatVaraukset[] = $_GET['omavarausA'];
+            $omatVaraukset[] = $_GET['omavarausL'];
+            echo build_calendar($_GET['k'], $_GET['v'], $varauskalenteri, $_GET['palveluid'], $omatVaraukset);
+        }
+        else if ($_GET['v'] && $_GET['k'])
+        {
+            echo build_calendar($_GET['k'], $_GET['v'], $varauskalenteri, $_GET['palveluid']);
         }
         else
-            echo build_calendar(5, 2019, 0, $varauskalenteri);
+            echo build_calendar(5, 2019, $varauskalenteri, $_GET['palveluid']);
     }
 
 
-    function build_calendar($month,$year,$dateArray, $varauskalenteri) {
+    function build_calendar($month, $year, $varauskalenteri, $palveluid, $omatVaraukset) {
         // Create array containing abbreviations of days of week.
         $daysOfWeek = array('Ma','Ti','Ke','To','Pe','La','Su');
         $monthNames = array("Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu", "Heinäkuu", "Elokuu", "Syyskuu", "Lokakuu", "Marraskuu", "Joulukuu");
@@ -52,7 +60,15 @@
         
         // Create the table tag opener and day headers
         $calendar = "<table style='margin-left:auto; margin-right:auto;'>";
-        $calendar .= "<caption><a href='javascript:haeKalenteriKuukausiJaVuosi(" . ($month-1) . ",$year);'><<</a> $monthName $year <a href='javascript:haeKalenteriKuukausiJaVuosi(" . ($month+1) . ",$year);'>>></a></caption>";
+        if (isset($omatVaraukset))
+        {
+            $calendar .= "<caption><a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . ($month-1) . ",$year, \"$omatVaraukset[0]\", \"$omatVaraukset[1]\");'><<</a> $monthName $year <a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . ($month+1) . ",$year, \"$omatVaraukset[0]\", \"$omatVaraukset[1]\");'>>></a></caption>";
+        }
+        else
+        {
+            $calendar .= "<caption><a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . ($month-1) . ",$year);'><<</a> $monthName $year <a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . ($month+1) . ",$year);'>>></a></caption>";
+        }
+        
         $calendar .= "<tr>";
         // Create the calendar headers
         foreach($daysOfWeek as $day) {
@@ -81,13 +97,32 @@
              $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
              
              $date = "$year-$month-$currentDayRel";
-             $varattu = 0;
 
+             $varattu = 0;
+             
              foreach ($varauskalenteri as $varaus)
              {
-                if (($varaus["varauksen_aloituspvm"] <= $date) && ($varaus["varauksen_lopetuspvm"] >= $date)) // varauksen_lopetuspvm
+                if ($omatVaraukset[0] <= $date && $omatVaraukset[1] >= $date)
                 {
-                    $calendar .= "<td id='$date' style='color:var(--main-primary-4); background-color: #F00; border-color:var(--main-primary-1); border: 1px solid; width: 2em;'>$currentDay</td>";
+                    $calendar .= "<td id='$date' style='color:var(--main-primary-4); background-color: #0F0; border-color:var(--main-primary-1); border: 1px solid; width: 2em;'><a href='javascript:ValitsePaivaKalenterista(\"$palveluid\", \"$date\");'>$currentDay</a></td>";
+                    $varattu = 1;
+                    break;
+                }
+                else if ($varaus["varauksen_aloituspvm"] == $date)
+                {
+                    $calendar .= "<td id='$date' style='color:var(--main-primary-4); background-color: #F00; border-color:var(--main-primary-1); border: 1px solid; width: 2em;'><a href='javascript:ValitsePaivaKalenterista(\"$palveluid\", \"$date\");'>$currentDay</a></td>";
+                    $varattu = 1;
+                    break;
+                }
+                else if ($varaus["varauksen_lopetuspvm"] == $date)
+                {
+                    $calendar .= "<td id='$date' style='color:var(--main-primary-4); background-color: #F00; border-color:var(--main-primary-1); border: 1px solid; width: 2em;'><a href='javascript:ValitsePaivaKalenterista(\"$palveluid\", \"$date\");'>$currentDay</a></td>";
+                    $varattu = 1;
+                    break;
+                }
+                else if (($varaus["varauksen_aloituspvm"] < $date) && ($varaus["varauksen_lopetuspvm"] > $date)) // varauksen_lopetuspvm
+                {
+                    $calendar .= "<td id='$date' style='color:var(--main-primary-4); background-color: #C00; border-color:var(--main-primary-1); border: 1px solid; width: 2em;'>$currentDay</td>";
                     $varattu = 1;
                     break;
                 }
@@ -96,7 +131,7 @@
              
              if ($varattu == 0)
              {
-                $calendar .= "<td id='$date' style='color:var(--main-primary-4); background-color: var(--main-primary-2); border-color:var(--main-primary-1); border: 1px solid; width: 2em;'><a href='javascript:ValitsePaivaKalenterista(\"$date\");'>$currentDay</a></td>";
+                $calendar .= "<td id='$date' style='color:var(--main-primary-4); background-color: var(--main-primary-2); border-color:var(--main-primary-1); border: 1px solid; width: 2em;'><a href='javascript:ValitsePaivaKalenterista(\"$palveluid\", \"$date\");'>$currentDay</a></td>";
              }
 
              // Increment counters

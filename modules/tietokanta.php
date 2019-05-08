@@ -52,6 +52,35 @@
             $connection->close();
         }
 
+        public function OnkoVaraustaAjalla($palveluId, $alkupvm, $loppupvm)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+            
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $query = "SELECT * FROM mokin_varauskalenteri WHERE palvelu_id = '" . $palveluId . "' AND varauksen_aloituspvm >= '" . $alkupvm . "' AND varauksen_lopetuspvm <= '". $loppupvm . "';";
+
+            $result = $connection->query($query);
+            
+            $tulos = false;
+
+            if ($result->num_rows > 0) 
+            {
+                $tulos = true;
+            }
+            else
+            {
+                $tulos = false;
+            }
+
+            $connection->close();
+
+            return $tulos;
+        }
+
         /*
             Palauttaa mökin (palvelun) varaukset taulukossa, eli siis varauksen aloituspvm ja lopetuspvm
         */

@@ -1,4 +1,55 @@
-let varaukset = [];
+var edellinenValinta = null;
+
+    function ValitsePaivaKalenterista(palveluid, paivamaara)
+    {
+        var alkupaiva = document.getElementById('alkupvm');
+        var loppupaiva = document.getElementById('loppupvm');
+
+        if (edellinenValinta == null || edellinenValinta == 'loppupaiva')
+            {
+                alkupaiva.value = paivamaara;
+                edellinenValinta = 'alkupaiva';
+            }
+        else
+            {
+                var ap = new Date(alkupaiva.value + " 00:00");
+                var lp = new Date(paivamaara + " 00:00");
+
+                if (ap < lp)
+                {
+                    edellinenValinta = 'loppupaiva';
+                    TarkistaVaraus(palveluid, alkupaiva.value, paivamaara);
+                    loppupaiva.value = paivamaara;
+                }
+                else
+                {
+                    document.getElementById('alkupvm').value = "";
+                    document.getElementById('loppupvm'). value = "";
+                    edellinenValinta = 'loppupaiva';
+                }
+            }
+        
+
+        var valittupaiva = document.getElementById(paivamaara);
+        //valittupaiva.setAttribute("style", "background-color: #0F0");
+    }
+
+function TarkistaVaraus(palveluid, alkupaiva, loppupaiva)
+{
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText == 'varattu')
+            {
+                window.alert('Valitsemillasi päivillä ei ole mahdollista varata kyseistä majoitusta.');
+                document.getElementById('alkupvm').value = "";
+                document.getElementById('loppupvm'). value = "";
+            }
+        }
+    };
+    xmlhttp.open("GET", "tarkastavaraus.php?a=" + alkupaiva + "&l=" + loppupaiva + "&palveluid=" + palveluid, true);
+    xmlhttp.send();
+}
 
 function haeAsiakas(str)
 {
@@ -76,9 +127,7 @@ function haeVarauksenLisapalvelut(toimipisteid, varausid)
 
 function haeKalenteriKuukausiJaVuosi(kuukausi, vuosi)
 {
-    console.log("hep");
-
-    var s = document.getElementById('majoitus');
+    var s = document.getElementById('majoitusid');
     var str = s.options[s.selectedIndex].value;
 
     if (str.length == 0) { 
@@ -97,7 +146,7 @@ function haeKalenteriKuukausiJaVuosi(kuukausi, vuosi)
 
 function haeKalenteri()
 {
-    var s = document.getElementById('majoitus');
+    var s = document.getElementById('majoitusid');
     var str = s.options[s.selectedIndex].value;
 
     if (str.length == 0) { 
@@ -115,6 +164,31 @@ function haeKalenteri()
     //document.getElementById('alkupvm').focus();
 }
 
+function haeMajoituksenKalenteriKuukausiJaVuosi(palveluid, kuukausi, vuosi, omavarausA, omavarausL)
+{
+    if (palveluid.length == 0) { 
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("kalenteri").innerHTML = this.responseText;
+            }
+        };
+        if (typeof omavarausA === 'undefined' && typeof omavarausL === 'undefined')
+        {
+            xmlhttp.open("GET", "luovarauskalenteri.php?palveluid=" + palveluid + "&k=" + kuukausi + "&v=" + vuosi, true);
+            xmlhttp.send();
+        }
+        else
+        {
+            
+            xmlhttp.open("GET", "luovarauskalenteri.php?palveluid=" + palveluid + "&k=" + kuukausi + "&v=" + vuosi + "&omavarausA=" + omavarausA + "&omavarausL=" + omavarausL, true);
+            xmlhttp.send();
+        }
+    }
+}
+
 function haeKalenteriHakusanalla(str)
 {
     if (str.length == 0) { 
@@ -123,10 +197,10 @@ function haeKalenteriHakusanalla(str)
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("scriptcontainer").innerHTML = this.responseText;
+                document.getElementById("kalenteri").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "haekalenteri.php?q=" + str, true);
+        xmlhttp.open("GET", "luovarauskalenteri.php?palveluid=" + str, true);
         xmlhttp.send();
     }
 }

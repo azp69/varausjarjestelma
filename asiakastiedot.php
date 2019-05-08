@@ -43,7 +43,7 @@ session_start();
 
             <div class="row">
                 <input type="button" value="Muokkaa" class="button_submit" name="muokkaaAsiakasta" onclick="window.location.href='<?php echo $href ?>'">
-                <input type="submit" value="Poista" class="button_submit" name="poistaAsiakas">
+                <input type="submit" value="Poista" class="button_submit" name="poistaAsiakas" onclick="return confirm('Haluatko varmasti poistaa asiakkaan?');">
             </div>
         </form>
 

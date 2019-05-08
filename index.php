@@ -1,10 +1,15 @@
 <?php
     session_start();
+    include_once("modules/asiakas.php");
+    include_once("modules/asiakkaat.php");
+    include_once("modules/lasku.php");
+    include_once("modules/majoituksenraporttiluokka.php");
+    include_once("modules/palvelu.php");
     include_once('modules/perustiedot.php');
     include_once("modules/toimipiste.php");
-    include_once("modules/palvelu.php");
+    include_once("modules/varauksenpalvelut.php");
+    include_once("modules/varaus.php");
     include_once("modules/tietokanta.php");
-    include_once("modules/majoituksenraporttiluokka.php");
     
 ?>
 
