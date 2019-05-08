@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
 ?>
 
 <script src="scripts/varaus.js">

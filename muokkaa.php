@@ -1,5 +1,12 @@
 <?php
-$tk = new Tietokanta;
+session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
+?>
+
+<?php
 
 // jos on painettu tallenna, luodaan uusi Toimipiste-olio ja haetaan tiedot formilta
 if (isset($_POST['SubmitButton'])) {

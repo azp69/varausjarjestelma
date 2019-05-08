@@ -56,6 +56,10 @@
         {
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
             
+            $palveluId = mysqli_real_espace_pstring($connection, $palveluId);
+            $alkupvm = mysqli_real_espace_pstring($connection, $alkupvm);
+            $loppupvm = mysqli_real_espace_pstring($connection, $loppupvm);
+
             if ($connection->connect_error)
             {
                 die("Ei saada yhteyttä tietokantaan.");
@@ -92,6 +96,9 @@
             {
                 die("Ei saada yhteyttä tietokantaan.");
             }
+
+            $palveluId = mysqli_real_espace_pstring($connection, $palveluId);
+
 
             $query = "SELECT * FROM mokin_varauskalenteri WHERE palvelu_id = '" . $palveluId . "'";
 
@@ -132,6 +139,7 @@
                 die("Ei saada yhteyttä tietokantaan.");
             }
             $q = mysqli_real_escape_string($connection, $hakusana);
+
             $nimet = explode(" ", $q);
             $query = "SELECT * FROM Asiakas WHERE (etunimi LIKE '" . $q . "%' OR sukunimi LIKE '" . $q . "%') OR (etunimi LIKE '$nimet[0]' AND sukunimi LIKE '$nimet[1]%') OR (sukunimi LIKE '$nimet[0]' AND etunimi LIKE '$nimet[1]%');";
 
@@ -164,6 +172,9 @@
         {
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
             
+            $varausid = mysqli_real_escape_string($connection, $varausid);
+
+
             if ($connection->connect_error)
             {
                 die("Ei saada yhteyttä tietokantaan.");
@@ -192,6 +203,12 @@
                 die("Ei saada yhteyttä tietokantaan.");
             }
 
+            $varausid = mysqli_real_escape_string($connection, $varausid);
+            $majoitusid = mysqli_real_escape_string($connection, $majoitusid);
+            $varauksen_aloituspvm = mysqli_real_escape_string($connection, $varauksen_aloituspvm);
+            $varauksen_paattymispvm = mysqli_real_escape_string($connection, $varauksen_paattymispvm);
+            
+
             $sql = "UPDATE Varaus SET varattu_alkupvm='$varauksen_aloituspvm 16:00:00', varattu_loppupvm='$varauksen_paattymispvm 12:00:00' WHERE varaus_id = '$varausid';";
 
             $sql .= "UPDATE mokin_varauskalenteri SET varauksen_aloituspvm='$varauksen_aloituspvm 16:00:00', varauksen_lopetuspvm='$varauksen_paattymispvm 12:00:00' WHERE varaus_id = '$varausid';";
@@ -209,8 +226,9 @@
             {
                 if ($palvelu->getLkm() > 0)
                 {
+                    $p = mysqli_real_escape_string($connection, $palvelu);
                     $sql .= "INSERT INTO Varauksen_palvelut (palvelu_id, varaus_id, lkm)
-                    VALUES (" . $palvelu->getPalveluId() . ", $varausid, " . $palvelu->getLkm() . ");"; // Lisäpalvelut
+                    VALUES (" . $palvelu->getPalveluId() . ", $varausid, " . $p->getLkm() . ");"; // Lisäpalvelut
                 }
             }
             $onnistuiko = false;

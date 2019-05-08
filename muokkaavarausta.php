@@ -1,10 +1,13 @@
 <?php
-    include_once('modules/tietokanta.php');
-    include_once('modules/varaus.php');
-    include_once('modules/asiakas.php');
-    include_once('modules/palvelu.php');
-    include_once('modules/varauksenpalvelut.php');
+session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
+?>
 
+<?php
+    
     if (isset($_POST['varausid']))
     {
         $aloituspvm = $_POST['alkupvm'];

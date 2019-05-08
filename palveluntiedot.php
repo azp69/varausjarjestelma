@@ -1,6 +1,9 @@
 <?php
 session_start();
-$tk = new Tietokanta;
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
 ?>
 
 <div class ="container">

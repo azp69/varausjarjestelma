@@ -1,4 +1,12 @@
 <?php
+session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
+?>
+
+<?php
     if ($_GET['palveluid'])
     {
         include_once("modules/tietokanta.php");

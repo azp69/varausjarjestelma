@@ -1,4 +1,12 @@
 <?php
+session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
+?>
+
+<?php
     // haetaan toimipisteet tietokannasta
     $tk = new Tietokanta;
     $toimipisteet = array();
