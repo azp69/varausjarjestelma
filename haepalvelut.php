@@ -28,8 +28,8 @@
 
         if ($_GET['p'] == 1) // 1 = majoitus, 2 = muu palvelu
         {
-            echo "<select name='majoitusid' id='majoitus' class='dropdownmenu' onclick='haeKalenteri();'>\n";
-         
+            echo "<select name='majoitusid' id='majoitus' class='dropdownmenu' onchange='haeKalenteri();'>\n";
+            echo "<option value='' disabled selected>Valitse majoitus</option>\n";
             foreach ($palvelut as $palvelu)
             {
                 echo "<option value='" . $palvelu->getPalveluId() . "'>" . $palvelu->getNimi() . "</option>\n";

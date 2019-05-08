@@ -1,4 +1,11 @@
 <?php 
+
+    include_once("modules/tietokanta.php");
+    include_once("modules/toimipiste.php");
+    include_once("modules/palvelu.php");
+    
+    $tk = new Tietokanta;
+
 if (isset($_POST['SubmitButton'])) {
     $toimipisteet = $tk->haeLike($_POST["hae"], 1);
     $mokit = $tk->haeLike($_POST["hae"], 2);

@@ -10,12 +10,15 @@
         
         ?>
         
+        function PaivitaVaraukset()
+        {
+        
         const varaus = {
                 alkupaiva: '',
                 loppupaiva: ''
             }
 
-            let varaukset = [];
+            
             var v;
         <?php
         foreach ($varauskalenteri as $varaus)
@@ -25,8 +28,12 @@
             echo "v.loppupaiva = '" . $varaus["varauksen_lopetuspvm"] . "';\n";
             echo "varaukset.push(v);\n";
         }
-        
-        echo "luoKalenteri(null, 0, true);\n";
+        ?>
+            
+        <?php
+        //echo "luoKalenteri(null, 0, true);\n";
+        echo "}\n";
+        //echo "console.log(varaukset[0].alkupaiva);";
         
     }
 ?>

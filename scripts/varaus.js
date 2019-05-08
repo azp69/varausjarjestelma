@@ -1,3 +1,5 @@
+let varaukset = [];
+
 function haeAsiakas(str)
 {
     if (str.length == 0) { 
@@ -72,6 +74,27 @@ function haeVarauksenLisapalvelut(toimipisteid, varausid)
     }
 }
 
+function haeKalenteriKuukausiJaVuosi(kuukausi, vuosi)
+{
+    console.log("hep");
+
+    var s = document.getElementById('majoitus');
+    var str = s.options[s.selectedIndex].value;
+
+    if (str.length == 0) { 
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("kalenteri").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "luovarauskalenteri.php?palveluid=" + str + "&k=" + kuukausi + "&v=" + vuosi, true);
+        xmlhttp.send();
+    }
+}
+
 function haeKalenteri()
 {
     var s = document.getElementById('majoitus');
@@ -83,16 +106,10 @@ function haeKalenteri()
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("scriptcontainer").innerHTML = this.responseText;
-                
-                // eval(paivitaVaraukset());
-                // paivitaVaraukset();
-                //sulje();
-                //luoKalenteri(null, 0, true);
-                //console.log("joo");
+                document.getElementById("kalenteri").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "haekalenteri.php?q=" + str, true);
+        xmlhttp.open("GET", "luovarauskalenteri.php?palveluid=" + str, true);
         xmlhttp.send();
     }
     //document.getElementById('alkupvm').focus();
@@ -169,3 +186,4 @@ function poistaVaraus()
         // Do nothing!
     }
 }
+

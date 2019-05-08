@@ -3,7 +3,7 @@
     Alkaen
     <?php if ($_GET['sivu'] == 'luovaraus')
     { ?>
-    <input type="text" class="textinput" id="alkupvm" name="alkupvm" readonly onFocus="luoKalenteri('alkupvm', 0, true);" value="Valitse aloituspvm" />
+    <input type="text" class="textinput" id="alkupvm" name="alkupvm" readonly value="Valitse aloituspvm" />
     <?php 
     }
     else
@@ -16,7 +16,7 @@
     Päättyen
     <?php if ($_GET['sivu'] == 'luovaraus')
     { ?>
-    <input type="text" class="textinput" id="loppupvm" name="loppupvm" readonly onFocus="luoKalenteri('loppupvm', 0, true);" value="Valitse aloituspvm" />
+    <input type="text" class="textinput" id="loppupvm" name="loppupvm" readonly value="Valitse aloituspvm" />
     <?php 
     }
     else
