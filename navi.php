@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    if ($_SESSION["luokka"] > 0)
+    if (isset($_SESSION["luokka"]))
     {
 
     
@@ -68,7 +68,7 @@
             <p>Laskutus</p>
         </a>
         <div class="navi_submenu" id="laskutus_submenu" style="display:none;">
-            <p><a href="?sivu=muokkaalaskua&id=0">Lisää</a></p>
+            <p><a href="?sivu=valitselaskuttamattomatvaraukset">Lisää</a></p>
                      
         </div>
     </div>
@@ -111,7 +111,7 @@
             <p>Raportointi</p>
         </a>
         <div class="navi_submenu" id="majoituksenraportointi_submenu" style="display:none;">
-            <p><a href="?sivu=majoituksenraportointi">Majoitus</a></p>
+            <p><a href="?sivu=lisapalveluidenraportointi">Lisäpalvelut</a></p>
         </div>
     </div>
 

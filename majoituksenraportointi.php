@@ -1,10 +1,12 @@
 <?php
-    include_once("modules/tietokanta.php");
-    include_once("modules/toimipiste.php");
-    
-    $tk = new Tietokanta;
+session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
+?>
 
-    session_start();
+<?php
 
     if (isset($_POST['SubmitButton']) && $_POST["alkupvm"] && $_POST["loppupvm"] && $_POST["alkupvm"] < $_POST["loppupvm"] && $_POST["toimipisteid"] != "") {
         // haetaan toimipisteen mökkien lukumäärä
@@ -26,9 +28,16 @@
     echo '<script type="text/javascript"> haeToimipisteenMokkienTayttoaste('. $_POST["toimipisteid"] .', "'. $_POST["alkupvm"] .'", "'. $_POST["loppupvm"].'"); 
     haeToimipisteenMokkienVarauksetAikavalilla('. $_POST["toimipisteid"] .', "'. $_POST["alkupvm"] .'", "'. $_POST["loppupvm"].'", '. $mokkienLukumaara .'); </script>';
 
-      //////////////////////////////////////////
-     // TODO: Nappi, josta voi palata hakuun //
-    //////////////////////////////////////////
+?>
+<div class="tallenna-peruuta-napit" id="palaaraportointiin">
+    <div class="nappi-container">
+        <div class="linkki">
+            <a href="?sivu=majoituksenraportointi">Tee toinen haku</a>
+        </div>
+    </div>
+</div>
+
+<?php
 
     } else {
         $toimipisteet = $tk->haeKaikkiToimipisteet();

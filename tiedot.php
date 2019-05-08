@@ -1,10 +1,11 @@
 <?php
 session_start();
-        include_once("modules/asiakas.php");
-        include_once("modules/tietokanta.php");
-        include_once("modules/lasku.php");
-        $tk = new Tietokanta;
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
 ?>
+
 
 <div class ="container">
     <div class="tiedot-header"><h1>Asiakkaan laskut</h1></div>

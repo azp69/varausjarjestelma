@@ -303,3 +303,71 @@ select {
     width: 100%;
     margin-bottom: 1.5em;
 }
+
+#palaaraportointiin {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.lasku-form-container {
+    width: 100%;
+    text-align: center;
+}
+
+.lasku-form-grid1 {
+    display: grid;
+    grid-template-areas: 
+        'p-lvarausid p-llaskuid p-llaskuid p-llaskuid p-llaskuid'
+        'valiotsikko valiotsikko valiotsikko valiotsikko valiotsikko'
+        'p-palvnimi p-palvmaara p-palvhinta p-palvalvpros p-palvalv';
+    text-align: left;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.lasku-form-grid2 {
+    display: grid;
+    grid-template-areas: 
+        'tyhja tyhja tyhja p-lalv textinput-lalv'
+        'tyhja tyhja tyhja p-lsumma textinput-lsumma';
+    text-align: left;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.lasku-form-grid3 {
+    display: grid;
+    grid-template-areas: 
+        '. p-lasiakasid . .'
+        '. p-lsukunimi p-llahiosoite .'
+        '. textinput-lsukunimi textinput-llahiosoite .'
+        '. p-lpostinro p-lpostitoimipaikka .'
+        '. textinput-lpostinro textinput-lpostitoimipaikka .';
+    text-align: left;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.lasku-form-grid1 > input[type="text"], .lasku-form-grid2 > input[type="text"] {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#p-llaskuid {grid-area: p-llaskuid;}
+#p-lasiakasid {grid-area: p-lasiakasid;}
+#p-lvarausid {grid-area: p-lvarausid;}
+#p-lsukunimi {grid-area:p-lsukunimi;}
+#p-llahiosoite {grid-area:p-llahiosoite;}
+#textinput-lsukunimi {grid-area:textinput-lsukunimi;}
+#textinput-llahiosoite {grid-area:textinput-llahiosoite;}
+#p-lpostinro {grid-area:p-lpostinro;}
+#p-lpostitoimipaikka {grid-area:p-lpostitoimipaikka;}
+#textinput-lpostinro {grid-area:textinput-lpostinro;}
+#textinput-lpostitoimipaikka {grid-area:textinput-lpostitoimipaikka;}
+#p-lsumma {grid-area:p-lsumma;}
+#p-lalv {grid-area:p-lalv;}
+#textinput-lsumma {grid-area:textinput-lsumma;} 
+#textinput-lalv {grid-area:textinput-lalv;}
+#p-palvnimi {grid-area:p-palvnimi;}
+#p-palvhinta {grid-area:p-palvhinta;}
+#p-palvalvpros {grid-area:p-palvalvpros;}
+#p-palvalv {grid-area:p-palvalv;} 
+#p-palvmaara {grid-area:p-palvmaara;} 
+#valiotsikko {grid-area: valiotsikko;}

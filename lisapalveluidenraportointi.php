@@ -1,12 +1,12 @@
 <?php
-    include_once("modules/tietokanta.php");
-    include_once("modules/toimipiste.php");
-    include_once("modules/lisapalaveluidenraportointiluokka.php");
-    
-    $tk = new Tietokanta;
+session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
+?>
 
-    session_start();
-
+<?php
     if (isset($_POST['SubmitButton']) && $_POST["alkupvm"] && $_POST["loppupvm"] && $_POST["alkupvm"] < $_POST["loppupvm"] && $_POST["toimipisteid"] != "") {
 
         $toimipiste = $tk->HaeToimipiste($_POST["toimipisteid"]);
@@ -25,9 +25,16 @@
     // echotaan scripti, jossa kutsutaan funktioita, jotka luovat chartit
     echo '<script type="text/javascript"> haeToimipisteenLisapalveluidenOstomaaratAikavalilla('. $_POST["toimipisteid"] .', "'. $_POST["alkupvm"] .'", "'. $_POST["loppupvm"].'");</script>';
 
-      //////////////////////////////////////////
-     // TODO: Nappi, josta voi palata hakuun //
-    //////////////////////////////////////////
+?>
+<div class="tallenna-peruuta-napit" id="palaaraportointiin">
+    <div class="nappi-container">
+        <div class="linkki">
+            <a href="?sivu=lisapalveluidenraportointi">Tee toinen haku</a>
+        </div>
+    </div>
+</div>
+
+<?php
 
     } else {
         $toimipisteet = $tk->haeKaikkiToimipisteet();

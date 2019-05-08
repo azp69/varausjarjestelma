@@ -1,4 +1,12 @@
 <?php
+session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
+?>
+
+<?php
     include_once("modules/tietokanta.php");
     include_once("modules/palvelu.php");
     include_once("modules/asiakas.php");
@@ -16,7 +24,6 @@
         {
             echo "<input type='hidden' name='lisapalveluid[]' value='"  . $palvelu->getPalveluId() . "'/>\n";
             echo "<li>" . $palvelu->getNimi() . "<input type='text' maxlength=2 class='textinput' style='width:4em' name='lisapalvelu" . $palvelu->getPalveluId() . "' value='" . palvelunLukumaara($varauksenpalvelut, $palvelu->getPalveluId()) ."' /> kpl</li>\n";
-            //echo "<input type='checkbox' name='lisapalveluid[]' value='"  . $palvelu->getPalveluId() . "'/>" . $palvelu->getNimi() . "<br />\n";
         }
         
     }

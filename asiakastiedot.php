@@ -1,7 +1,10 @@
-<?php // Tästä näkymästä on myös pääsy asiakkaan poistamiseen ja muokkaamiseen
+<?php
 session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
 ?>
-
 
 
 <div class="container">
@@ -10,11 +13,6 @@ session_start();
     </div>
 
     <?php
-
-    include_once("modules/asiakas.php");
-    include_once("modules/tietokanta.php");
-    
-    $tk = new Tietokanta;
 
     $asiakas = $tk->HaeAsiakas($_GET['id']);
     $href = '?sivu=muokkaaasiakasta&id=' . $asiakas->getAsiakasId() . '';

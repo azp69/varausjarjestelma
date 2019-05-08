@@ -7,22 +7,25 @@ if (!isset($_SESSION["luokka"]))
 ?>
 
 <?php
-    include_once("modules/tietokanta.php");
-    include_once("modules/asiakas.php");
-    include_once("modules/varaus.php");
-    
+
     if (isset($_GET['toimipiste']) || isset($_GET['hakusana']))
     {
+        include_once("modules/tietokanta.php");
+        include_once("modules/palvelu.php");
+        include_once("modules/toimipiste.php");
+        include_once("modules/asiakas.php");
+        include_once("modules/varaus.php");
+
         $tk = new Tietokanta;
         $varaukset = "";
 
         if (isset($_GET['toimipiste']))
         {
-            $varaukset = $tk->HaeVarauksistaToimipisteella($_GET['toimipiste']);
+            $varaukset = $tk->HaeLaskuttamattomistaVarauksistaToimipisteella($_GET['toimipiste']);
         }
         else if (isset($_GET['hakusana']))
         {
-            $varaukset = $tk->HaeVarauksista($_GET['hakusana']);
+            $varaukset = $tk->HaeLaskuttamattomistaVarauksista($_GET['hakusana']);
         }
         ?>
 
@@ -37,7 +40,7 @@ if (!isset($_SESSION["luokka"]))
             ?>
             <tr>
             <td>
-            <a href="?sivu=muokkaavarausta&varausid=<?php echo $varaus->getVarausID(); ?>">
+            <a href="?sivu=muokkaalaskua&id=0&varausid=<?php echo $varaus->getVarausID(); ?>">
             <?php echo $varaus->getVarausID(); ?>
             </a>
             </td>

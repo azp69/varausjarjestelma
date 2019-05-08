@@ -1,8 +1,10 @@
 <?php
     session_start();
+
     include_once("modules/asiakas.php");
     include_once("modules/asiakkaat.php");
     include_once("modules/lasku.php");
+    include_once("modules/lisapalaveluidenraportointiluokka.php");
     include_once("modules/majoituksenraporttiluokka.php");
     include_once("modules/palvelu.php");
     include_once('modules/perustiedot.php');
@@ -11,6 +13,8 @@
     include_once("modules/varaus.php");
     include_once("modules/tietokanta.php");
     
+    $tk = new Tietokanta;
+
 ?>
 
 <html>
@@ -39,7 +43,7 @@
 
             <!-- Ylämenu -->
             <?php
-                if ($_SESSION["luokka"] > 0) // Mikäli ollaan kirjauduttu sisään, näytetään valikko
+                if (isset($_SESSION["luokka"])) // Mikäli ollaan kirjauduttu sisään, näytetään valikko
                 {
                     include("navi.php");
                 }
@@ -55,7 +59,7 @@
         <!-- Sisältö -->
 
             <?php
-            if ($_SESSION["luokka"] > 0) // Ollaan sisällä
+            if (isset($_SESSION["luokka"])) // Ollaan sisällä
                 {
                     if($_GET["sivu"] != "") // Ollaan kirjauduttu ja halutaan näyttää joku alasivu
                     {

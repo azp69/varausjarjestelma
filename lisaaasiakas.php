@@ -1,10 +1,13 @@
 <?php
 session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
 ?>
 
     <?php
-    include_once("modules/tietokanta.php");
-    $tk = new Tietokanta;
+    
 
     if (isset($_POST['submit'])) {
         $etunimi = $_POST['etunimi'];

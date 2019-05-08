@@ -261,3 +261,39 @@ function poistaVaraus()
     }
 }
 
+function haeLaskuttamattomatVaraukset()
+{
+    var s = document.getElementById('toimipiste');
+    var str = s.options[s.selectedIndex].value;
+
+    if (str.length == 0) { 
+        document.getElementById("hakucontainer").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("hakucontainer").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "haelaskuttamattomatvaraukset.php?&toimipiste=" + str, true);
+        xmlhttp.send();
+    }
+}
+
+function haeLaskuttamattomistaVarauksista(str)
+{
+    if (str.length == 0) { 
+        document.getElementById("hakucontainer").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("hakucontainer").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "haelaskuttamattomatvaraukset.php?&hakusana=" + str, true);
+        xmlhttp.send();
+    }
+}

@@ -1,10 +1,12 @@
-<?php 
+<?php
+session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
+?>
 
-    include_once("modules/tietokanta.php");
-    include_once("modules/toimipiste.php");
-    include_once("modules/palvelu.php");
-    
-    $tk = new Tietokanta;
+<?php 
 
 if (isset($_POST['SubmitButton'])) {
     $toimipisteet = $tk->haeLike($_POST["hae"], 1);
@@ -14,12 +16,6 @@ if (isset($_POST['SubmitButton'])) {
 ?>
 
 <div class ="container">
-
-    <?php
-
-        
-
-        ?>
 
     <div class="hae-header">
         <h1>Hae</h1>

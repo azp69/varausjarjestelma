@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
+?>
+
 <?php 
 
 if ($_GET['id'] && $_GET['apvm'] && $_GET['lpvm']) {

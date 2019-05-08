@@ -1,12 +1,13 @@
 <?php
 session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
 ?>
         
         <?php
-        include_once("modules/asiakas.php");
-        include_once("modules/tietokanta.php");
-        include_once("modules/lasku.php");
-        $tk = new Tietokanta;
+        
             
         $asiakkaat = array();
         $asiakkaat = $tk->HaeAsiakkaat();

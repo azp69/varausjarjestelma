@@ -1,8 +1,9 @@
-<?php 
-include_once("modules/asiakas.php");
-include_once("modules/tietokanta.php");
-include_once("modules/lasku.php");
-$tk = new Tietokanta;
+<?php
+session_start();
+if (!isset($_SESSION["luokka"]))
+{
+    die("Kirjaudu sisään.");
+}
 ?>
 
 <div class ="container">
@@ -28,7 +29,7 @@ $tk = new Tietokanta;
         <p>Postitoimipaikka: <?php echo $lasku->getPostitoimipaikka()?></p>
         <p>Postinro.: <?php echo $lasku->getPostinro()?></p>
         <p>Hinta: <?php echo $lasku->getSumma() . "€ + ALV (" . $lasku->getAlv() . "%)";?></p>
-        <div class="muokkaa-nappi"><a href=<?php echo '"?sivu=muokkaalaskua&id='. $lasku->getLaskuId() . '"';?>>Muokkaa</a></div>
+        <div class="muokkaa-nappi"><a href=<?php echo '"?sivu=muokkaalaskua&id='. $lasku->getLaskuId() . '&varausid='. $lasku->getVarausId() .'"';?>>Muokkaa</a></div>
         
     </div>
         <?php  

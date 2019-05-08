@@ -438,6 +438,75 @@
             $connection->close();
         }
 
+        function HaeLaskuttamattomistaVarauksistaToimipisteella($hakusana)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $hakusana = mysqli_real_escape_string($connection, $hakusana);
+
+            $query = "SELECT Varaus.*, Asiakas.*
+            FROM Varaus 
+            INNER JOIN Asiakas ON Asiakas.asiakas_id = Varaus.asiakas_id
+            LEFT JOIN Lasku ON Lasku.varaus_id = Varaus.varaus_id
+            WHERE Lasku.varaus_id IS NULL AND Varaus.toimipiste_id = '$hakusana';";
+            $result = $connection->query($query);
+
+            $varaukset = array();
+            if ($result->num_rows > 0) 
+            {
+                while($row = $result->fetch_assoc())
+                {
+                    $asiakas = new Asiakas($row["asiakas_id"], $row["etunimi"], $row["sukunimi"], $row["lahiosoite"], $row["postitoimipaikka"], $row["postinro"], $row["email"], $row["puhelinnro"]);
+                    $varaus = new Varaus($row["varaus_id"], $asiakas, $row["toimipiste_id"], $row["varattu_pvm"], $row["vahvistus_pvm"], $row["varattu_alkupvm"], $row["varattu_loppupvm"]);
+                    $varaukset[] = $varaus;
+                }
+            }
+
+            return $varaukset;
+
+            $connection->close();
+        }
+
+        function HaeLaskuttamattomistaVarauksista($hakusana)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error)
+            {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+            $hakusana = mysqli_real_escape_string($connection, $hakusana);
+
+            $nimet = explode(" ", $hakusana);
+
+            $query = "SELECT Varaus.*, Asiakas.*
+            FROM Varaus 
+            INNER JOIN Asiakas ON Asiakas.asiakas_id = Varaus.asiakas_id
+            LEFT JOIN Lasku ON Lasku.varaus_id = Varaus.varaus_id
+            WHERE Lasku.varaus_id IS NULL AND (((etunimi LIKE '" . $hakusana . "%' OR sukunimi LIKE '" . $hakusana . "%') OR (etunimi LIKE '$nimet[0]' AND sukunimi LIKE '$nimet[1]%') OR (sukunimi LIKE '$nimet[0]' AND etunimi LIKE '$nimet[1]%')) OR (Varaus.varaus_id = '$hakusana'));";
+            $result = $connection->query($query);
+
+            $varaukset = array();
+            if ($result->num_rows > 0) 
+            {
+                while($row = $result->fetch_assoc())
+                {
+                    $asiakas = new Asiakas($row["asiakas_id"], $row["etunimi"], $row["sukunimi"], $row["lahiosoite"], $row["postitoimipaikka"], $row["postinro"], $row["email"], $row["puhelinnro"]);
+                    $varaus = new Varaus($row["varaus_id"], $asiakas, $row["toimipiste_id"], $row["varattu_pvm"], $row["vahvistus_pvm"], $row["varattu_alkupvm"], $row["varattu_loppupvm"]);
+                    $varaukset[] = $varaus;
+                }
+            }
+
+            return $varaukset;
+
+            $connection->close();
+        }
+        
         function HaeVarauksistaToimipisteella($hakusana)
         {
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
@@ -1404,5 +1473,36 @@
             return $majoituksenRaportointi;
         }
 
+        public function haeToimipisteenLisapalveluidenVarauksetAikavalilla($toimipiste_id, $apvm, $lpvm) {
+
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error) {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $toimipiste_id = $connection->real_escape_string($toimipiste_id);
+            $apvm = $connection->real_escape_string($apvm);
+            $lpvm = $connection->real_escape_string($lpvm);
+
+            $query = "SELECT palvelu, SUM(lkm) as 'lkm', hinta FROM `lisapalveluiden_raportointi` WHERE toimipiste_id = '$toimipiste_id' AND pvm >='$apvm' AND pvm <= '$lpvm' GROUP BY palvelu_id;";
+
+            $result = $connection->query($query);
+
+            $lisapalveluidenRaportointi = array();
+
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    $rivi = new ToimipisteenLisapalveluidenVarauksetAikavalilla($row['palvelu'], $row['lkm'], $row['hinta']);
+
+                    $lisapalveluidenRaportointi[] = $rivi;
+                }
+            } else {
+                $lisapalveluidenRaportointi = null;
+            }
+
+            $connection->close();
+            return $lisapalveluidenRaportointi;
+        }
     }
 ?>
