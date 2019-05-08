@@ -56,9 +56,9 @@
         {
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
             
-            $palveluId = mysqli_real_espace_pstring($connection, $palveluId);
-            $alkupvm = mysqli_real_espace_pstring($connection, $alkupvm);
-            $loppupvm = mysqli_real_espace_pstring($connection, $loppupvm);
+            $palveluId = mysqli_real_escape_string($connection, $palveluId);
+            $alkupvm = mysqli_real_escape_string($connection, $alkupvm);
+            $loppupvm = mysqli_real_escape_string($connection, $loppupvm);
 
             if ($connection->connect_error)
             {
@@ -97,7 +97,7 @@
                 die("Ei saada yhteyttä tietokantaan.");
             }
 
-            $palveluId = mysqli_real_espace_pstring($connection, $palveluId);
+            $palveluId = mysqli_real_escape_string($connection, $palveluId);
 
 
             $query = "SELECT * FROM mokin_varauskalenteri WHERE palvelu_id = '" . $palveluId . "'";
@@ -226,9 +226,8 @@
             {
                 if ($palvelu->getLkm() > 0)
                 {
-                    $p = mysqli_real_escape_string($connection, $palvelu);
                     $sql .= "INSERT INTO Varauksen_palvelut (palvelu_id, varaus_id, lkm)
-                    VALUES (" . $palvelu->getPalveluId() . ", $varausid, " . $p->getLkm() . ");"; // Lisäpalvelut
+                    VALUES (" . $palvelu->getPalveluId() . ", $varausid, " . $palvelu->getLkm() . ");"; // Lisäpalvelut
                 }
             }
             $onnistuiko = false;
@@ -253,6 +252,11 @@
             {
                 die("Ei saada yhteyttä tietokantaan.");
             }
+
+            $varaus_id = mysqli_real_escape_string($connection, $varaus_id);
+            $majoitus_id = mysqli_real_escape_string($connection, $majoitus_id);
+            $varattu_alkupvm = mysqli_real_escape_string($connection, $varattu_alkupvm);
+            $varattu_loppupvm = mysqli_real_escape_string($connection, $varattu_loppupvm);
 
             $sql = "INSERT INTO mokin_varauskalenteri (palvelu_id, varaus_id, varauksen_aloituspvm, varauksen_lopetuspvm) 
             VALUES ('$majoitus_id', '$varaus_id', '$varattu_alkupvm 16:00:00', '$varattu_loppupvm 12:00:00');";
@@ -346,6 +350,9 @@
         {
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
             
+            $varausid = mysqli_real_escape_string($connection, $varausid);
+            $palveluid = mysqli_real_escape_string($connection, $palveluid);
+
             $query = "SELECT lkm FROM Varauksen_palvelut WHERE varaus_id = '$varausid' AND palvelu_id = '$palveluid';";
 
             $lukumaara = "";
@@ -369,6 +376,8 @@
         {
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
             
+            $varausid = mysqli_real_escape_string($connection, $varausid);
+
             $query = "SELECT * FROM Palvelu INNER JOIN Varauksen_palvelut ON Palvelu.palvelu_id = Varauksen_palvelut.palvelu_id WHERE Varauksen_palvelut.varaus_id = $varausid;";
 
             $palvelut = array();
@@ -395,13 +404,14 @@
         // Palauttaa Varaus-objektin (1kpl) varaus-id:n perusteella
         function HaeVaraus($varausid)
         {
-        
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+            
 
             if ($connection->connect_error)
             {
                 die("Ei saada yhteyttä tietokantaan.");
             }
+            $varausid = mysqli_real_escape_string($connection, $varausid);
 
             $query = "SELECT Varaus.*, Asiakas.*
             FROM Varaus INNER JOIN Asiakas ON Asiakas.asiakas_id = Varaus.asiakas_id WHERE Varaus.varaus_id = '$varausid';";
@@ -428,12 +438,16 @@
 
         function HaeVarauksista($hakusana)
         {
+
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
 
             if ($connection->connect_error)
             {
                 die("Ei saada yhteyttä tietokantaan.");
             }
+
+            $hakusana = mysqli_real_escape_string($connection, $hakusana);
+
             $nimet = explode(" ", $hakusana);
 
             $query = "SELECT Varaus.*, Asiakas.*
@@ -460,6 +474,7 @@
         {
             $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
 
+            
             if ($connection->connect_error)
             {
                 die("Ei saada yhteyttä tietokantaan.");
@@ -533,6 +548,7 @@
             {
                 die("Ei saada yhteyttä tietokantaan.");
             }
+            $hakusana = mysqli_real_escape_string($connection, $hakusana);
 
             $query = "SELECT Varaus.*, Asiakas.*
             FROM Varaus INNER JOIN Asiakas ON Asiakas.asiakas_id = Varaus.asiakas_id WHERE Varaus.toimipiste_id = '$hakusana';";
@@ -562,6 +578,8 @@
             {
                 die("Ei saada yhteyttä tietokantaan.");
             }
+
+            $varausid = mysqli_real_escape_string($connection, $varausid);
 
             $query = "SELECT * FROM Varauksen_palvelut INNER JOIN Palvelu ON Varauksen_palvelut.palvelu_id = Palvelu.palvelu_id WHERE varaus_id = '$varausid' AND tyyppi = '1';";
             $result = $connection->query($query);
@@ -713,6 +731,8 @@
                 die("Ei saada yhteyttä tietokantaan.");
             }
 
+            $asiakkaanID = mysqli_real_escape_string($connection, $asiakkaanID);
+            
             $query = "SELECT * FROM Asiakas WHERE asiakas_id = '$asiakkaanID'";
 
             $result = $connection->query($query);
@@ -747,6 +767,8 @@
             {
                 die("HaeLaskut ei saa yhteyttä tietokantaan.");
             }
+
+            $asiakkaanID = mysqli_real_escape_string($connection, $asiakkaanID);
 
             $query = "SELECT * FROM Lasku WHERE asiakas_id ='$asiakkaanID'";
 
@@ -851,6 +873,8 @@
                 die("Ei saada yhteyttä tietokantaan.");
             }
 
+            $laskunID = mysqli_real_escape_string($connection, $laskunID);
+
             $query = "SELECT * FROM Lasku WHERE lasku_id='$laskunID'";
 
             $result = $connection->query($query);
@@ -882,6 +906,7 @@
             {
                 die("Ei saada yhteyttä tietokantaan.");
             }
+            $laskunID = mysqli_real_escape_string($connection, $laskunID);
 
             $query = "DELETE FROM Lasku WHERE lasku_id='$laskunID'";
 
@@ -997,6 +1022,7 @@
             {
                 die("Ei saada yhteyttä tietokantaan.");
             }
+            $toimipisteenID = mysqli_real_escape_string($connection, $toimipisteenID); 
 
             $query = "SELECT * FROM Toimipiste WHERE toimipiste_id = '$toimipisteenID'";
 
