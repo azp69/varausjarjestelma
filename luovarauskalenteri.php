@@ -44,7 +44,7 @@ if (!isset($_SESSION["luokka"]))
             echo build_calendar($_GET['k'], $_GET['v'], $varauskalenteri, $_GET['palveluid']);
         }
         else
-            echo build_calendar(5, 2019, $varauskalenteri, $_GET['palveluid']);
+            echo build_calendar(date("m"), date("Y"), $varauskalenteri, $_GET['palveluid']);
     }
 
 
