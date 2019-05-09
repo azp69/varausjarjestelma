@@ -1,50 +1,111 @@
 /* toimipaikat.php:n toimipaikkalistauksen muokkausta */
 .listaus {
     text-align: center;
-    width: 100%;
+    max-width: 750px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .listaus .keskita {
-    margin: 0 auto;
+    
     margin-top: 1.5em;
     background-color: var(--main-primary-0);
     border: 2px solid var(--main-primary-3);
     border-radius: 8px;
     padding:0.5em;
-    max-width: 50%;
 }
 
-.form-container { width: 100%; }
+.form-container {
+    width: 100%;
+}
 
 /* grid-areat toimipaikan muokkaukselle */
-/* inputit */
-#textinput-nimi { grid-area: nimi; }
-#textinput-lahiosoite { grid-area: osoite; }
-#textinput-postitoimipaikka { grid-area: ptpaikka; }
-#textinput-postinro { grid-area: postinro; }
-#textinput-email { grid-area: email; }
-#textinput-puhelinnro { grid-area: puhelinnro; }
-/* paragraphit */
-#p-nimi { grid-area: pnimi; }
-#p-lahiosoite { grid-area: posoite; }
-#p-postitoimipaikka { grid-area: pptpaikka; }
-#p-postinro { grid-area: ppostinro; }
-#p-email { grid-area: pemail; }
-#p-puhelinnro { grid-area: ppuhelinnro; }
+#textinput-nimi {
+    grid-area: nimi;
+}
+
+#textinput-lahiosoite {
+    grid-area: osoite;
+}
+
+#textinput-postitoimipaikka {
+    grid-area: ptpaikka;
+}
+
+#textinput-postinro {
+    grid-area: postinro;
+}
+
+#textinput-email {
+    grid-area: email;
+}
+
+#textinput-puhelinnro {
+    grid-area: puhelinnro;
+}
+
+#p-nimi {
+    grid-area: pnimi;
+}
+
+#p-lahiosoite {
+    grid-area: posoite;
+}
+
+#p-postitoimipaikka {
+    grid-area: pptpaikka;
+}
+
+#p-postinro {
+    grid-area: ppostinro;
+}
+
+#p-email {
+    grid-area: pemail;
+}
+
+#p-puhelinnro {
+    grid-area: ppuhelinnro;
+}
 
 /* grid-areat palveluiden muokkaukselle */
-/* inputit */
-#textinput-hinta { grid-area: hinta; }
-#select-alv { grid-area: salv; }
-#textarea-kuvaus { grid-area: kuvaus; }
-#select-tyyppi { grid-area: styyppi; }
-#select-toimipiste { grid-area: stoimipiste; }
-/* paragraphit */
-#p-kuvaus { grid-area: pkuvaus; } 
-#p-toimipiste { grid-area: ptoimipiste; }
-#p-alv { grid-area: palv; } 
-#p-tyyppi { grid-area: ptyyppi; }
 
+#textinput-hinta {
+    grid-area: hinta;
+}
+
+#select-alv {
+    grid-area: salv;
+}
+
+#p-kuvaus {
+    grid-area: pkuvaus;
+}
+
+#p-toimipiste {
+    grid-area: ptoimipiste;
+}
+
+#textarea-kuvaus {
+    grid-area: kuvaus;
+}
+
+#p-alv {
+    grid-area: palv;
+}
+
+#p-tyyppi {
+    grid-area: ptyyppi;
+}
+
+#select-tyyppi {
+    grid-area: styyppi;
+}
+
+#select-toimipiste {
+    grid-area: stoimipiste;
+}
 
 /* muokkaa.php:n muotoilua */
 .grid-container {
@@ -111,7 +172,7 @@ input[type=submit]:hover {
 /* tiedot.php:n muotoilua */
 .tiedot-container {
     max-width: 750px;
-    min-width: 440px;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0.5em;
@@ -124,14 +185,12 @@ input[type=submit]:hover {
 }
 
 #muuttiedot {
-    width: 100%;
-    max-width: 750px;
+    max-width: 525px;
     min-width: 440px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0.5em;
     display:inline-grid; 
-    grid-template-columns: 1fr, 1fr;
     grid-template-columns: 50% 50%; 
     grid-template-rows: 100%;
 }
@@ -184,8 +243,6 @@ input[type=submit]:hover {
 .form-container {
     text-align: center;
     max-width: 620px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .grid-container-palvelut {

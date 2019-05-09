@@ -282,15 +282,86 @@ a:link, a:visited
     background-color: var(--main-primary-1);
 }
 
+
+/* Tommin osaa */
+.listaus .keskita {
+    text-align: center;
+    width: 50%;
+    border: 1px solid red;
+    margin: auto;
+}
+
+pre {
+    font-family: arial;
+}
+
+.form-container {
+    width: 100%;
+}
+
+#textinput-nimi {
+    grid-area: nimi;
+}
+
+#textinput-etunimi {
+    grid-area: etunimi;
+}
+
+#textinput-sukunimi {
+    grid-area: sukunimi;
+}
+
+#textinput-lahiosoite {
+    grid-area: osoite;
+    width: 90%;
+}
+
+#textinput-postitoimipaikka {
+    grid-area: ptpaikka;
+}
+
+#textinput-postinro {
+    grid-area: postinro;
+}
+
+#textinput-email {
+    grid-area: email;
+}
+
+#textinput-puhelinnro {
+    grid-area: puhelinnro;
+}
+
+#p-nimi {
+    grid-area: pnimi;
+}
+
+
+#p-lahiosoite {
+    grid-area: posoite;
+}
+
+#p-postitoimipaikka {
+    grid-area: pptpaikka;
+}
+
+#p-postinro {
+    grid-area: ppostinro;
+}
+
+#p-email {
+    grid-area: pemail;
+}
+
+#p-puhelinnro {
+    grid-area: ppuhelinnro;
+}
+
  /* Markuksen osuus alkaa */
 
-#textinput-etunimi { grid-area: etunimi; }
-#textinput-sukunimi { grid-area: sukunimi; }
-#p-osoite { grid-area: pposoite; }
-#p-etunimi { grid-area: petunimi; }
-#p-sukunimi { grid-area: psukunimi; }
-#p-submit { grid-area: psubmit; }
-#button-submit { grid-area: submit; }
+#p-osoite {
+    grid-area: pposoite;
+}
 
 #textinput-osoite {
     grid-area: lahiosoite;
@@ -310,7 +381,6 @@ a:link, a:visited
       'email puhelinnro'
       'psubmit psubmit'
       'submit submit';
-    grid-template-columns: 1fr;
     grid-gap: 10px;
     padding: 10px;
     text-align: center;
@@ -322,6 +392,7 @@ a:link, a:visited
 }
 
 .form-container > form > .customergrid-container {
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -348,4 +419,20 @@ a:link, a:visited
 .button_submit:hover
 {
     background-color: var(--main-primary-1);
+}
+
+#p-etunimi {
+    grid-area: petunimi;
+}
+
+#p-sukunimi {
+    grid-area: psukunimi;
+}
+
+#p-submit {
+    grid-area: psubmit;
+}
+
+#button-submit {
+    grid-area: submit;
 }

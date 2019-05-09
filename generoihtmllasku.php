@@ -14,7 +14,7 @@ function generoiHtmlLasku($laskuid)
 {
     if (isset($laskuid)) {
         $tk = new Tietokanta;
-        
+
         $lasku = $tk->HaeLaskunTiedot($laskuid);
         
         $varausid = $lasku->getVarausId();
@@ -53,10 +53,12 @@ function generoiHtmlLasku($laskuid)
     
         <table class="perustiedot">
             <tr>
+                <th></th>
                 <th>Laskun päiväys</th>
                 <th>Viivästyskorko</th>
             </tr>
             <tr>
+                <td rowspan="7"><img src="images/village_people_logo.jpg"></td>
                 <td>' . (date('d.m.Y', time())) . '</td>
                 <td>5 %</td>
             </tr>
