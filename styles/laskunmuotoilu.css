@@ -1,0 +1,65 @@
+:root{
+    --header-height: 60px;
+}
+
+.main-container {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    position: relative;
+    text-align: center;
+    font-family: arial;
+}
+
+.lasku-header {
+    height: var(--header-height);
+    width: 100%
+}
+
+.perustiedot {
+    border: 1px solid black;
+    border-collapse: collapse;
+    position: absolute;
+    right: 0;
+    top: var(--header-height);
+}
+
+.perustiedot th, .perustiedot td, .erittely th, .erittely td, 
+.maksutiedot th, .maksutiedot td {
+    text-align: center;
+    border: 1px solid black;
+    padding: .25rem;
+}
+
+.logo {
+    width: 200px;
+    height: 200px;
+    background: #4F914F;
+    top: var(--header-height);
+}
+
+.lisatietokentta {
+    margin-top: 2rem;
+    text-align: left;
+}
+
+.erittely {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+
+.maksutiedot {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+
+.empty {
+    border: none;
+}

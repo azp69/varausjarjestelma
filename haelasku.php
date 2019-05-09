@@ -29,7 +29,9 @@ if (!isset($_SESSION["luokka"]))
         <p>Postitoimipaikka: <?php echo $lasku->getPostitoimipaikka()?></p>
         <p>Postinro.: <?php echo $lasku->getPostinro()?></p>
         <p>Hinta: <?php echo $lasku->getSumma() . "€ + ALV (" . $lasku->getAlv() . "%)";?></p>
-        <div class="muokkaa-nappi"><a href=<?php echo '"?sivu=muokkaalaskua&id='. $lasku->getLaskuId() . '&varausid='. $lasku->getVarausId() .'"';?>>Muokkaa</a></div>
+        <div class="muokkaa-nappi"><a href=<?php echo '"?sivu=muokkaalaskua&id='. $lasku->getLaskuId() . '&varausid='. $lasku->getVarausId(). '"';?>>Muokkaa</a></div>
+        <div class="muokkaa-nappi"><a href=<?php echo '"generoilasku.php?laskuid='. $lasku->getLaskuId() . '"';?> target="_blank">Tulosta lasku</a></div>
+        <div class="muokkaa-nappi"><a href=<?php echo '"?sivu=generoilasku&laskuid='. $lasku->getLaskuId() . '&toiminto=sahkoposti'. '"';?>>Lähetä lasku sähköpostilla</a></div>
         
     </div>
         <?php  

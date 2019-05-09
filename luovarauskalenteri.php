@@ -66,15 +66,41 @@ if (!isset($_SESSION["luokka"]))
         // month in question.
         $dayOfWeek = $dateComponents['wday'];
         
+        $nextmonth = "";
+        $prevmonth = "";
+        $nextyear = "";
+        $prevyear = "";
+
+        if ($month == 1)
+        {
+            $prevmonth = 12;
+            $prevyear = $year -1;
+            $nextmonth = $month + 1;
+            $nextyear = $year;
+        }
+        else if ($month == 12)
+        {
+            $prevmonth = $month - 1;
+            $prevyear = $year;
+            $nextmonth = 1;
+            $nextyear = $year + 1;
+        }
+        else
+        {
+            $prevmonth = $month -1;
+            $nextmonth = $month +1;
+            $nextyear = $year;
+            $prevyear = $year;
+        }
         // Create the table tag opener and day headers
         $calendar = "<table style='margin-left:auto; margin-right:auto;'>";
         if (isset($omatVaraukset))
         {
-            $calendar .= "<caption><a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . ($month-1) . ",$year, \"$omatVaraukset[0]\", \"$omatVaraukset[1]\");'><<</a> $monthName $year <a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . ($month+1) . ",$year, \"$omatVaraukset[0]\", \"$omatVaraukset[1]\");'>>></a></caption>";
+            $calendar .= "<caption><a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . $prevmonth . ",$prevyear, \"$omatVaraukset[0]\", \"$omatVaraukset[1]\");'><<</a> $monthName $year <a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . $nextmonth . ",$nextyear, \"$omatVaraukset[0]\", \"$omatVaraukset[1]\");'>>></a></caption>";
         }
         else
         {
-            $calendar .= "<caption><a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . ($month-1) . ",$year);'><<</a> $monthName $year <a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . ($month+1) . ",$year);'>>></a></caption>";
+            $calendar .= "<caption><a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . $prevmonth . ",$prevyear);'><<</a> $monthName $year <a href='javascript:haeMajoituksenKalenteriKuukausiJaVuosi($palveluid, " . $nextmonth . ",$nextyear);'>>></a></caption>";
         }
         
         $calendar .= "<tr>";

@@ -299,19 +299,27 @@
 
             $varausid = "";
 
+            $onnistuiko = 0;
+
             if ($connection->multi_query($sql) === TRUE) 
             {
                 $varausid = $connection->insert_id;
                 $this->LisaaVarausMokinVarauskalenteriin($varausid, $majoitusid, $varattu_alkupvm, $varattu_loppupvm, $connection); // Lisätään majoituksen varaus varauskalenteriin
                 $this->LisaaPalvelutVaraukseen($varausid, $palvelut, $lkm, $varattu_alkupvm, $varattu_loppupvm, $majoitusid, $connection); // Lisätään palvelut varaukseen
+                $onnistuiko = 1;
             }
             else 
             {
                 echo "Error: " . $sql . "<br>" . $connection->error;
+                $onnistui = 0;
             }
 
             $connection->close();
             
+            if ($onnistuiko == 1)
+                return 1;
+            else 
+                return null;
         }
 
         private function LisaaPalvelutVaraukseen($varaus_id, $palvelut, $lkm, $varattu_alkupvm, $varattu_loppupvm, $majoitusid, $connection)

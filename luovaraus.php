@@ -21,7 +21,15 @@ if (!isset($_SESSION["luokka"]))
         // LisaaVaraus($asiakas_id, $toimipiste_id, $varattu_pvm, $vahvistus_pvm, $varattu_alkupvm, $varattu_loppupvm, $majoitusid, $palvelut, $lkm)
         
         $tk = new Tietokanta;
-        $tk->LisaaVaraus($_POST['asiakasid'], $_POST['toimipisteid'], date("Y-m-d"), date("Y-m-d"), $_POST['alkupvm'], $_POST['loppupvm'], $_POST['majoitusid'], $lisapalvelut, $lisapalveluidenlkm);
+        if ($tk->LisaaVaraus($_POST['asiakasid'], $_POST['toimipisteid'], date("Y-m-d"), date("Y-m-d"), $_POST['alkupvm'], $_POST['loppupvm'], $_POST['majoitusid'], $lisapalvelut, $lisapalveluidenlkm))
+        {
+            echo "Varaus luotiin onnistuneesti.";
+        }
+        else
+        {
+            echo "Virhe luotaessa varausta.";
+        }
+
     }
 ?>
 <script src="scripts/varaus.js"></script>
