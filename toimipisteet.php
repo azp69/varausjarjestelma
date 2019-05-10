@@ -4,25 +4,24 @@ if (!isset($_SESSION["luokka"]))
 {
     die("Kirjaudu sisään.");
 }
-?>
-
-<?php
     // haetaan toimipisteet tietokannasta
     $tk = new Tietokanta;
     $toimipisteet = array();
     $toimipisteet = $tk->haeKaikkiToimipisteet();
+?> 
 
-    if ($toimipisteet == null) {
-        echo "Ei hakutuloksia";
-    } else { ?> 
+<div style="text-align: center; width: 100%;">
+    <h2>Hae toimipisteistä</h2>
 
-    <div class="listaus">
-        <h1>Toimipaikan valinta</h1>
-        <?php
-            // listataan kaikki toimipisteet linkkeinä, joista pääsee tarkastelemaan toimipisteiden tietoja
-            foreach ($toimipisteet as &$toimipiste){   
-                echo "<div class='keskita'> <a href='index.php?sivu=toimipisteentiedot&id=" . $toimipiste->getToimipisteId() . "'>" . $toimipiste->getNimi() . "</a></div>";
-            }
+    <input type="text" class="textinput" name="haku" value="" onkeyup="haeToimipisteista(this.value)" />
+
+    <h2>Toimipisteen valinta</h2>
+</div>
+<div class="listaus" id="listaus">
+    <?php
+        foreach ($toimipisteet as &$toimipiste){   
+            echo "<div class='keskita'> <a href='index.php?sivu=toimipisteentiedot&id=" . $toimipiste->getToimipisteId() . "'>" . $toimipiste->getNimi() . "</a></div>\n";
         }
     ?>
-    </div>
+</div>
+<script src="scripts/haeToimipisteet.js"></script>
