@@ -68,6 +68,20 @@ function haeAsiakas(str)
     }
 }
 
+function haeAsiakkaat(str)
+{
+    
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("asiakaslistaus").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "haeasiakkaat.php?q=" + str + "&asiakaslistaus=1", true);
+        xmlhttp.send();
+}
+
+
 function haePalvelut()
 {
     var s = document.getElementById('toimipiste');

@@ -68,7 +68,7 @@
             <p>Laskutus</p>
         </a>
         <div class="navi_submenu" id="laskutus_submenu" style="display:none;">
-            <p><a href="?sivu=valitselaskuttamattomatvaraukset">Lisää</a></p>
+            <p><a href="?sivu=valitselaskuttamattomatvaraukset">Uusi lasku</a></p>
                      
         </div>
     </div>
@@ -123,29 +123,6 @@
 
     }
 
-    if ($_SESSION["luokka"] > 1) // admin valikko
-    {
-
-    ?>
-
-    <div class="navilink" onmouseover="avaaValikko('admin_submenu')" onmouseout="suljeValikko('admin_submenu')">
-        <a href="?">
-            <p>Admin</p>
-        </a>
-        <div class="navi_submenu" id="admin_submenu" style="display:none;">
-            <p>Listaa</p>
-            <p>Lisää</p>
-            <p>Muokkaa</p>
-            <p>Poista</p>
-        </div>
-    </div>
-
-        <?php
-    }
-    else
-    {
-
-    }
 ?>
 
 </div>

@@ -21,7 +21,7 @@ if (!isset($_SESSION["luokka"]))
         ?> 
 
         <div class="listaus">
-            <h1>Asiakkaan valinta</h1>
+            <h1>Valitse asiakas</h1>
             
             <?php
             echo "<div class='keskita'>\n";

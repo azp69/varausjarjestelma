@@ -141,7 +141,7 @@
             $q = mysqli_real_escape_string($connection, $hakusana);
 
             $nimet = explode(" ", $q);
-            $query = "SELECT * FROM Asiakas WHERE (etunimi LIKE '" . $q . "%' OR sukunimi LIKE '" . $q . "%') OR (etunimi LIKE '$nimet[0]' AND sukunimi LIKE '$nimet[1]%') OR (sukunimi LIKE '$nimet[0]' AND etunimi LIKE '$nimet[1]%');";
+            $query = "SELECT * FROM Asiakas WHERE (etunimi LIKE '" . $q . "%' OR sukunimi LIKE '" . $q . "%') OR (etunimi LIKE '$nimet[0]' AND sukunimi LIKE '$nimet[1]%') OR (sukunimi LIKE '$nimet[0]' AND etunimi LIKE '$nimet[1]%') ORDER BY sukunimi;";
 
             $result = $connection->query($query);
 
