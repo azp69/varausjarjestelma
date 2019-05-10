@@ -707,7 +707,7 @@
                 die("Ei saada yhteyttä tietokantaan.");
             }
         
-            $query = "SELECT * FROM Asiakas";
+            $query = "SELECT * FROM Asiakas ORDER BY sukunimi";
                     
             $listAsiakkaat = array();
 
