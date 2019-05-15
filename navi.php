@@ -25,7 +25,7 @@
             <p>Toimipisteet</p>
         </a>
         <div class="navi_submenu" id="toimipaikat_submenu" style="display:none;">
-            <p><a href="?sivu=muokkaa&id=0">Lisää</p></a>
+            <p><a href="?sivu=muokkaa&id=0">Luo uusi</p></a>
         </div>
     </div>
     
@@ -46,7 +46,7 @@
             <p>Varaukset</p>
         </a>
         <div class="navi_submenu" id="varaukset_submenu" style="display:none;">
-            <p><a href="?sivu=luovaraus">Uusi varaus</p></a>
+            <p><a href="?sivu=luovaraus">Luo uusi</p></a>
         </div>
     </div>
 
@@ -68,7 +68,7 @@
             <p>Laskutus</p>
         </a>
         <div class="navi_submenu" id="laskutus_submenu" style="display:none;">
-            <p><a href="?sivu=valitselaskuttamattomatvaraukset">Uusi lasku</a></p>
+            <p><a href="?sivu=valitselaskuttamattomatvaraukset">Luo uusi</a></p>
                      
         </div>
     </div>
@@ -90,7 +90,7 @@
             <p>Asiakkaat</p>
         </a>
         <div class="navi_submenu" id="kayttajat_submenu" style="display:none;">
-            <p><a href="?sivu=lisaaasiakas">Lisää</a></p>
+            <p><a href="?sivu=lisaaasiakas">Luo uusi</a></p>
         </div>
     </div>
 
@@ -111,6 +111,7 @@
             <p>Raportointi</p>
         </a>
         <div class="navi_submenu" id="majoituksenraportointi_submenu" style="display:none;">
+            <p><a href="?sivu=majoituksenraportointi">Majoitus</a></p>
             <p><a href="?sivu=lisapalveluidenraportointi">Lisäpalvelut</a></p>
         </div>
     </div>

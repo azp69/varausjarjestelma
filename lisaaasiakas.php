@@ -40,7 +40,7 @@ if (!isset($_SESSION["luokka"]))
                 <p id="p-sukunimi">Sukunimi</p>
                 <input type="text" name="sukunimi" class="textinput" id="textinput-sukunimi" value="">
                 <p id="p-osoite">Lähiosoite</p>
-                <input type="text" name="lahiosoite" class="textinput" id="textinput-osoite" value="">
+                <input type="text" name="lahiosoite" class="textinput" id="textinput-osoite" value="" style="">
                 <p id="p-postitoimipaikka">Postitoimipaikka</p>
                 <input type="text" name="postitoimipaikka" class="textinput" id="textinput-postitoimipaikka" value="">
                 <p id="p-postinro">Postinumero</p>
