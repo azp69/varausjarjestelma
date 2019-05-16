@@ -53,24 +53,27 @@ function generoiHtmlLasku($laskuid)
     
         <table class="perustiedot">
             <tr>
-                <th></th>
+                <th>Asiakkaan tiedot</th>
                 <th>Laskun päiväys</th>
                 <th>Viivästyskorko</th>
             </tr>
             <tr>
-                <td rowspan="7"><img src="images/village_people_logo.jpg"></td>
+                <td>'. $lasku->getSukunimi().'</td>
                 <td>' . (date('d.m.Y', time())) . '</td>
                 <td>5 %</td>
             </tr>
             <tr>
+                <td>'. $lasku->getLahiosoite().'</td>
                 <th>Laskunumero</th>
                 <th>Asiakasnumero</th>
             </tr>
             <tr>
+                <td>'. $lasku->getPostinro().'</td>
                 <td>' . $lasku->getLaskuId() . '</td>
                 <td>' . $lasku->getAsiakasId() . '</td>
             </tr>
             <tr>
+                <td rowspan="4">'. $lasku->getPostitoimipaikka().'</td>
                 <th>Maksuehto</th>
                 <th>Viitenumero</th>
             </tr>
@@ -87,7 +90,7 @@ function generoiHtmlLasku($laskuid)
         </table>
     
         <div class="lisatietokentta">
-            <p>Lisätietoa laskusta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta tempor dolor, ut vestibulum dui ullamcorper a. In sodales auctor aliquam. Proin fringilla eros tincidunt, suscipit enim in, porttitor arcu. Mauris lectus lectus, rutrum vitae lacus non, posuere luctus mauris. Morbi facilisis accumsan ex, sed egestas nibh lobortis sed. Nulla facilisi.</p>
+            <p>Alta löydät erittelyn laskutetuista palveluista.</p>
         </div>
     
         <table class="erittely">
