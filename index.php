@@ -11,6 +11,7 @@
     include_once("modules/toimipiste.php");
     include_once("modules/varauksenpalvelut.php");
     include_once("modules/varaus.php");
+    include_once("modules/kayttajatunnus.php");
     include_once("modules/tietokanta.php");
     
     $tk = new Tietokanta;
@@ -63,9 +64,13 @@
                 {
                     if($_GET["sivu"] != "") // Ollaan kirjauduttu ja halutaan näyttää joku alasivu
                     {
-                        if (file_exists($_GET["sivu"].".php") && $_GET["sivu"] != "index") // Ei sallita indexiä
+                        if (file_exists($_GET["sivu"].".php") && $_GET["sivu"] != "index" && (strpos($_GET['sivu'], "/") == false)) // Ei sallita indexiä
                         {
                             include($_GET["sivu"].".php");
+                        }
+                        else
+                        {
+                            echo "Virheellinen sivu.";
                         }
                     }
                     else

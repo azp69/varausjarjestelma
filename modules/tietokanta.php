@@ -1556,5 +1556,159 @@
             $connection->close();
             return $lisapalveluidenRaportointi;
         }
+
+        public function HaeKayttajatunnukset()
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error) {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $query = "SELECT id, tunnus FROM Kayttajatunnus";
+
+            $result = $connection->query($query);
+
+            $kayttajat = array();
+
+            if ($result->num_rows > 0)
+            {
+                while($row = $result->fetch_assoc()) 
+                {
+                    $kayttajatunnus = new Kayttajatunnus($row['id'], $row['tunnus'], "");
+                    $kayttajat[] = $kayttajatunnus;
+                }
+            }
+
+            $connection->close();
+
+            return $kayttajat;
+        }
+
+        public function HaeKayttajatunnus($id)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error) {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $id = $connection->real_escape_string($id);
+
+            $query = "SELECT id, tunnus FROM Kayttajatunnus WHERE id='$id'";
+
+            $result = $connection->query($query);
+
+            $kayttaja = null;
+
+            if ($result->num_rows > 0)
+            {
+                while($row = $result->fetch_assoc()) 
+                {
+                    $kayttaja = new Kayttajatunnus($row['id'], $row['tunnus'], "");
+                }
+            }
+
+            $connection->close();
+
+            return $kayttaja;
+        }
+
+        public function VaihdaKayttajanSalasana($id, $salasana)
+        {
+            include_once("/var/www/private/salt.php"); // $suola
+
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error) {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $id = $connection->real_escape_string($id);
+            $salasana = $connection->real_escape_string($salasana);
+            
+
+            $salasana = hash('sha256', $suola . $salasana);
+
+            $query = "UPDATE Kayttajatunnus SET salasana='$salasana' WHERE id='$id'";
+
+            $result = $connection->query($query);
+
+            $onnistuiko = false;
+
+            if ($connection->query($query) === TRUE) 
+            {
+                $onnistuiko = true;
+            }
+            else
+            {
+                $onnistuiko = false;
+            }
+
+            $connection->close();
+            return $onnistuiko;
+        }
+
+        public function PoistaKayttajatunnus($id)
+        {
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error) {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $id = $connection->real_escape_string($id);
+
+            $query = "DELETE FROM Kayttajatunnus WHERE id='$id'";
+
+            $onnistuiko = false;
+
+            if ($connection->query($query) === TRUE) 
+            {
+                $onnistuiko = true;
+            }
+            else
+            {
+                $onnistuiko = false;
+            }
+
+            $connection->close();
+
+            return $onnistuiko;
+
+        }
+
+        public function LuoUusiKayttajatunnus($tunnus, $salasana)
+        {
+            include_once("/var/www/private/salt.php"); // $suola
+
+            $connection = new mysqli($this->db_servername, $this->db_username, $this->db_password, $this->db_name);
+
+            if ($connection->connect_error) {
+                die("Ei saada yhteyttä tietokantaan.");
+            }
+
+            $tunnus = $connection->real_escape_string($tunnus);
+            $salasana = $connection->real_escape_string($salasana);
+
+            $salasana = hash('sha256', $suola . $salasana);
+            
+            $query = "INSERT INTO Kayttajatunnus (tunnus, salasana) VALUES ('$tunnus', '$salasana')";
+
+            $onnistuiko = false;
+
+            if ($connection->query($query) === TRUE) 
+            {
+                $onnistuiko = true;
+            }
+            else
+            {
+                $onnistuiko = false;
+            }
+
+            $connection->close();
+
+            return $onnistuiko;
+        }
     }
 ?>

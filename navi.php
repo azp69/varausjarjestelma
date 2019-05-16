@@ -116,7 +116,6 @@
         </div>
     </div>
 
-
     <?php
     }
     else
@@ -125,5 +124,30 @@
     }
 
 ?>
+
+<?php if ($_GET['sivu'] == "hallinta")
+    {
+        ?>
+    <div class="navilink_selected" onmouseover="avaaValikko('hallinta_submenu')" onmouseout="suljeValikko('hallinta_submenu')">
+    <?php    
+    }
+    else
+    {
+    ?>
+    <div class="navilink" onmouseover="avaaValikko('hallinta_submenu')" onmouseout="suljeValikko('hallinta_submenu')">
+    <?php
+    }
+    ?>
+        <a href="?sivu=hallinta">
+            <p>Hallinta</p>
+        </a>
+    </div>
+
+    
+    <div class="navilink">
+            <a href="?sivu=logout">
+            <p>Kirjaudu ulos</p>
+        </a>
+    </div>
 
 </div>
